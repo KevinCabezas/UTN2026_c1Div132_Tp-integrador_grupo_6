@@ -1,0 +1,17 @@
+CREATE TABLE types_users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+
+INSERT INTO types_users (name) VALUES
+('admin'),
+('customer');
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  mail VARCHAR(150) NOT NULL UNIQUE,
+  type_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_users_type FOREIGN KEY (type_id) REFERENCES types_users(id)
+);
