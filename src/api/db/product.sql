@@ -1,6 +1,6 @@
 CREATE TABLE product_lines (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(50) NOT NULL
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
 );
 
 INSERT INTO product_lines (name) VALUES ('marron'), ('gris');
@@ -8,12 +8,12 @@ INSERT INTO product_lines (name) VALUES ('marron'), ('gris');
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    brand VARCHAR(50),
-    price DECIMAL(10, 2),
-    stock INT,
-    line_id INT,
+    brand VARCHAR(50) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    stock INT NOT NULL,
+    line_id INT NOT NULL,
     state BOOLEAN NOT NULL DEFAULT TRUE,
-    image_url VARCHAR(255),
+    image_url VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (line_id) REFERENCES product_lines(id)
 );
