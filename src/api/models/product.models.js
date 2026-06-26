@@ -75,8 +75,8 @@ const deleteProduct = (id) => {
 export default {
     getAllProducts,
     getProductById,
+    getProductStock,
     createProduct,
     updateProduct,
-    deleteProduct,
-    getProductStock
+    deleteProduct
 }
