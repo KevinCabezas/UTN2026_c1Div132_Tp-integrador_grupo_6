@@ -1,27 +1,27 @@
-import { Router } from "express";
-import { validateId, validateProduct } from "../middlewares/middlewares.js";
-import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct } from "../controllers/product.controllers.js";
+// import { Router } from "express";
+// import { validateId, validateProduct } from "../middlewares/middlewares.js";
+// import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct } from "../controllers/product.controllers.js";
 
-const router = Router();
-
-
-// GET all products
-router.get("/", getAllProducts);
+// const router = Router();
 
 
-// GET by id
-router.get("/:id", validateId, getProductById);
+// // GET all products
+// router.get("/", getAllProducts);
 
 
-// POST product
-router.post("/", validateProduct, createProduct);
+// // GET by id
+// router.get("/:id", validateId, getProductById);
 
 
-// UPDATE product
-router.put("/", modifyProduct);
+// // POST product
+// router.post("/", validateProduct, createProduct);
 
 
-// DELETE product
-router.delete("/:id", validateId, removeProduct);
+// // UPDATE product
+// router.put("/", modifyProduct);
 
-export default router;
+
+// // DELETE product
+// router.delete("/:id", validateId, removeProduct);
+
+// export default router;

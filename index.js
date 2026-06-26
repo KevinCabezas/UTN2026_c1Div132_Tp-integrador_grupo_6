@@ -1,6 +1,6 @@
 import express from "express";
 import environments from "./src/api/config/environments.js";
-import { productRoutes, userRoutes, saleRoutes } from "./src/api/routes/index.js";
+import { saleRoutes } from "./src/api/routes/index.js";
 import cors from "cors";
 import { loggerURL } from "./src/api/middlewares/middlewares.js";
 
@@ -10,6 +10,9 @@ const PORT = environments.port;
 app.use(cors()); 
 app.use(express.json()); 
 app.use(loggerURL);
+
+
+app.use('/api/sales', saleRoutes)
 
 
 app.listen(PORT, () => {

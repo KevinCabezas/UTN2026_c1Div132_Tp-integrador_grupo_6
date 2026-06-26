@@ -44,7 +44,7 @@ const validateSale = (req, res, next) => {
                 }
 
                 // Validacion quantity
-                let quantity = product.quantity;
+                let quantity = products.quantity;
                 if (quantity === undefined || quantity === null) {
                     errores.push(`El producto en la posicion ${i} no tiene un quantity definido.`)
                 } else if (typeof quantity !== 'number' || isNaN(quantity) || !Number.isInteger(quantity)) {
