@@ -13,6 +13,9 @@
 // router.get("/:id", validateId, getProductById);
 
 
+// // GET product s`Stock by id
+// router.get("/:id", validateId, getProductStockById);
+
 // // POST product
 // router.post("/", validateProduct, createProduct);
 
