@@ -73,7 +73,7 @@ export const createProduct = async (req, res) => {
     try {
         const { name, brand, price, stock, line_id, image_url } = req.body;
         
-        if (!name || !brand || !price || !stock || !line_id || !image_url || !id) {
+        if (!name || !brand || !price || !stock || !line_id || !image_url) {
             return res.status(400).json({
                 message: "Todos los campos del formulario son requeridos"
             });
