@@ -7,13 +7,13 @@ const validateProduct = (req, res, next) => {
     // Validacion name
     if (name === undefined || name === null) {
         errores.push('El nombre del producto es obligatorio.');
-    } else if (typeof name !== 'string'){
+    } else if (typeof name !== 'string') {
         errores.push('El nombre del producto no es válido.');
     } else {
         const lengthName = name.trim().length;
-        if (lengthName < 2) {
-            errores.push('El nombre del producto debe tener mas de 2 caracteres.');
-        } else if (lengthName > 50){
+        if (lengthName <= 2) {
+            errores.push('El nombre del producto debe tener más de 2 caracteres.');
+        } else if (lengthName > 50) {
             errores.push('El nombre del producto no debe superar los 50 caracteres.');
         }
     }
@@ -25,9 +25,9 @@ const validateProduct = (req, res, next) => {
         errores.push('La marca del producto no es válida.');
     } else {
         const lengthBrand = brand.trim().length;
-        if (lengthBrand < 2) {
-            errores.push('La marca del producto debe tener mas de 2 caracteres.');
-        } else if (lengthBrand > 50){
+        if (lengthBrand <= 2) {
+            errores.push('La marca del producto debe tener más de 2 caracteres.');
+        } else if (lengthBrand > 50) {
             errores.push('La marca del producto no debe superar los 50 caracteres.');
         }
     }
@@ -62,13 +62,13 @@ const validateProduct = (req, res, next) => {
     // Validacion image_url
     if (image_url === undefined || image_url === null) {
         errores.push('La URL de la imagen del producto es obligatoria.');
-    } else if (typeof image_url !== 'string'){
+    } else if (typeof image_url !== 'string') {
         errores.push('La URL de la imagen del producto no es válida.');
     } else {
         const imageUrlLength = image_url.trim().length;
-        if (imageUrlLength < 5) {
-            errores.push('La URL de la imagen del producto debe tener mas de 5 caracteres.');
-        } else if (imageUrlLength > 255){
+        if (imageUrlLength <= 5) {
+            errores.push('La URL de la imagen del producto debe tener más de 5 caracteres.');
+        } else if (imageUrlLength > 255) {
             errores.push('La URL de la imagen del producto no debe superar los 255 caracteres.');
         }
     }

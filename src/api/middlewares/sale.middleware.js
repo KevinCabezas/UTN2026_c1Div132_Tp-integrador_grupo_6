@@ -24,7 +24,7 @@ const validateSale = (req, res, next) => {
     } else { 
         const lengthProducts = products.length;
         if (lengthProducts === 0) {
-            errores.push('La lista de productos debe tener al menos un producto')
+            errores.push('La lista de productos debe tener al menos un producto.')
         } else {
             for (let i = 0; i < lengthProducts; i++) {
 
@@ -44,7 +44,7 @@ const validateSale = (req, res, next) => {
                 }
 
                 // Validacion quantity
-                let quantity = products.quantity;
+                let quantity = producto.quantity;
                 if (quantity === undefined || quantity === null) {
                     errores.push(`El producto en la posicion ${i} no tiene un quantity definido.`)
                 } else if (typeof quantity !== 'number' || isNaN(quantity) || !Number.isInteger(quantity)) {
