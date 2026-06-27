@@ -1,6 +1,6 @@
 import express from "express";
 import environments from "./src/api/config/environments.js";
-import { productRoutes, saleRoutes } from "./src/api/routes/index.js";
+import { productRoutes, saleRoutes, authRoutes } from "./src/api/routes/index.js";
 import cors from "cors";
 import { loggerURL } from "./src/api/middlewares/middlewares.js";
 
@@ -14,6 +14,7 @@ app.use(loggerURL);
 
 app.use('/api/products', productRoutes);
 app.use('/api/sales', saleRoutes);
+app.use('/api/auth', authRoutes);
 
 
 
