@@ -1,30 +1,30 @@
-// import { Router } from "express";
-// import { validateId, validateProduct } from "../middlewares/middlewares.js";
-// import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct } from "../controllers/product.controllers.js";
+import { Router } from "express";
+import { validateProduct } from "../middlewares/product.middleware.js";
+import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct, getProductStockById } from "../controllers/product.controllers.js";
 
-// const router = Router();
-
-
-// // GET all products
-// router.get("/", getAllProducts);
+const router = Router();
 
 
-// // GET by id
-// router.get("/:id", validateId, getProductById);
+// GET all products
+router.get("/", getAllProducts);
 
 
-// // GET product s`Stock by id
-// router.get("/:id", validateId, getProductStockById);
-
-// // POST product
-// router.post("/", validateProduct, createProduct);
+// GET by id
+router.get("/:id", getProductById);
 
 
-// // UPDATE product
-// router.put("/", modifyProduct);
+// GET product s`Stock by id
+router.get("/:id", getProductStockById);
+
+// POST product
+router.post("/", validateProduct, createProduct);
 
 
-// // DELETE product
-// router.delete("/:id", validateId, removeProduct);
+// UPDATE product
+router.put("/", modifyProduct);
 
-// export default router;
+
+// DELETE product
+router.delete("/:id", removeProduct);
+
+export default router;
