@@ -22,7 +22,6 @@ export const indexView = async (req, res) => {
     }
 }
 
-
 export const loginView = async (req, res) => {
 
     try {
