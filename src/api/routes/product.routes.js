@@ -17,6 +17,6 @@ router.post("/", requireLogin, validateProduct, createProduct);
 // UPDATE product
 router.put("/", requireLogin, validateProduct, modifyProduct);
 // DELETE product
-router.delete("/:id", requireLogin, removeProduct);
+router.delete("/:id", requireLogin, validateId, removeProduct);
 
 export default router;
