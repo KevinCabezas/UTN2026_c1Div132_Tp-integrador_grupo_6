@@ -1,8 +1,10 @@
 import express from "express";
 import environments from "./src/api/config/environments.js";
-import { productRoutes, saleRoutes, authRoutes } from "./src/api/routes/index.js";
+import { productRoutes, saleRoutes, authRoutes, viewRoutes } from "./src/api/routes/index.js";
 import cors from "cors";
 import { loggerURL } from "./src/api/middlewares/middlewares.js";
+import { join, __dirname } from "./src/api/utils/index.js";
+
 
 const app = express();
 const PORT = environments.port;
@@ -10,12 +12,16 @@ const PORT = environments.port;
 app.use(cors()); 
 app.use(express.json()); 
 app.use(loggerURL);
+app.use(express.static(join(__dirname, "src/public")));
+
+app.set("view engine", "ejs");
+app.set("views", join(__dirname, "src/views"));
 
 
 app.use('/api/products', productRoutes);
 app.use('/api/sales', saleRoutes);
 app.use('/api/auth', authRoutes);
-
+app.use("/dashboard", viewRoutes); 
 
 
 app.listen(PORT, () => {
