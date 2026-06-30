@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   background: #f3f4f6;
+  font-family: sans-serif;
 }
 
 :root {
@@ -11,18 +12,38 @@
   --text-color: #111827;
   --bg-color: #f3f4f6;
   --border-radius: 8px;
-  --font-main: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   --color-b: #e5e7eb;
 }
 
-.auth-container {
+.container-main {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 20px;
+}
+a {
+  text-decoration: none;
+}
+.container-main a {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: var(--border-radius);
+  padding: 8px;
+  border: 0;
+  cursor: pointer;
 }
 
-.auth-container a {
+
+.container-auth {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container-auth a {
   background-color: var(--primary-color);
   color: white;
   border-radius: var(--border-radius);
