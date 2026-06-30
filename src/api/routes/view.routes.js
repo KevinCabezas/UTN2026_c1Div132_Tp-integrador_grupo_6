@@ -7,7 +7,6 @@ const router = Router();
 // pagina que se mostrara apenas se inicie la app
 router.get("/", loginView);
 
-
 router.get("/dashboard", indexView);
 
 export default router;
