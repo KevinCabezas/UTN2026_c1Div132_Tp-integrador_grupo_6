@@ -6,7 +6,7 @@ export const indexView = async (req, res) => {
 
         const [rows] = await ProductModels.getAllProducts();
 
-        res.render("index", {
+        res.render("dashboard/index", {
             title: "Dashboard",
             about: "Nuestros productos",
             productsArray: rows
@@ -22,3 +22,19 @@ export const indexView = async (req, res) => {
     }
 }
 
+
+export const loginView = async (req, res) => {
+
+    try {
+
+        res.render("auth/login", {
+            title: "Login",
+        })
+    } catch (error) {
+        console.log("Error obteniendo informacion", error.message);
+
+        res.status(500).json({
+            message: "Error interno obteniendo la informacion"
+        });
+    }
+}

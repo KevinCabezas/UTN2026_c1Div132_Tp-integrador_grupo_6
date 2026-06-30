@@ -21,7 +21,7 @@ app.set("views", join(__dirname, "src/views"));
 app.use('/api/products', productRoutes);
 app.use('/api/sales', saleRoutes);
 app.use('/api/auth', authRoutes);
-app.use("/dashboard", viewRoutes); 
+app.use("/", viewRoutes); 
 
 
 app.listen(PORT, () => {
