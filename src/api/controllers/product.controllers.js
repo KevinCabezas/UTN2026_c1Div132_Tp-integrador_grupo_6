@@ -25,12 +25,13 @@ export const getAllProducts = async (req, res) => {
 }
 
 export const getProductById = async (req, res) => {
+    const id = req.id;
     try {  
-        const [rows] = await ProductModels.getProductById(req.id);
+        const [rows] = await ProductModels.getProductById(id);
 
         if (rows.length === 0) {
             return res.status(404).json({
-                message: `No se encontró producto con id ${req.id}`
+                message: `No se encontró producto con id ${id}`
             });
         }   
         res.status(200).json({
@@ -38,21 +39,22 @@ export const getProductById = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(`Error obteniendo producto con id ${req.id}`, error.message);
+        console.log(`Error obteniendo producto con id ${id}`, error.message);
 
         res.status(500).json({
-            message: `Error interno al obtener un producto con id ${req.id}`
+            message: `Error interno al obtener un producto con id ${id}`
         });
     }
 }
 
 export const getProductStockById = async (req, res) => {
+    const id = req.id;
     try {  
-        const [rows] = await ProductModels.getProductStock(req.id);
+        const [rows] = await ProductModels.getProductStock(id);
 
         if (rows.length === 0) {
             return res.status(404).json({
-                message: `No se encontró producto con id ${req.id}`
+                message: `No se encontró producto con id ${id}`
             });
         }   
         res.status(200).json({
@@ -60,24 +62,17 @@ export const getProductStockById = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(`Error obteniendo producto con id ${req.id}`, error.message);
+        console.log(`Error obteniendo producto con id ${id}`, error.message);
 
         res.status(500).json({
-            message: `Error interno al obtener un producto con id ${req.id}`
+            message: `Error interno al obtener un producto con id ${id}`
         });
     }
 }
 
 export const createProduct = async (req, res) => {
-
+    const { name, brand, price, stock, line_id, image_url } = req.body;
     try {
-        const { name, brand, price, stock, line_id, image_url } = req.body;
-        
-        if (!name || !brand || !price || !stock || !line_id || !image_url) {
-            return res.status(400).json({
-                message: "Todos los campos del formulario son requeridos"
-            });
-        }
         const [rows] = await ProductModels.createProduct(name, brand, price, stock, line_id, image_url);
 
         res.status(201).json({
@@ -95,14 +90,8 @@ export const createProduct = async (req, res) => {
 }
 
 export const modifyProduct = async (req, res) => {
+    const {name, brand, price, stock, line_id, image_url, id} = req.body;
     try {
-        const {name, brand, price, stock, line_id, image_url, id} = req.body;
-
-        if (!name || !brand || !price || !stock || !line_id || !image_url || !id) {
-            return res.status(400).json({
-                message: "Todos los campos del formulario son requeridos"
-            });
-        }
         const [result] = await ProductModels.updateProduct(name, brand, price, stock, line_id, image_url, id);
         
         if (result.affectedRows === 0) {
@@ -125,12 +114,12 @@ export const modifyProduct = async (req, res) => {
     }
 }
 export const removeProduct = async (req, res) => {
-
+    const id = req.id;
     try {   
-        await ProductModels.deleteProduct(req.id);
+        await ProductModels.deleteProduct(id);
     
         res.status(200).json({
-            message: `Producto con id ${req.id} eliminado exitosamente`
+            message: `Producto con id ${id} eliminado exitosamente`
         });
 
     } catch (error) {
