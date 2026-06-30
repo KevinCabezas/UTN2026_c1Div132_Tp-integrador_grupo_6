@@ -2,7 +2,27 @@
 
 
 <main class="container-auth">
-  <h1>Aca debe ir el form de admin</h1>
+
+  <div class="logo">
+      <a href="index.html" class="logo-container">
+        <img src="" alt="logo pumpernic">
+      </a>
+  </div>
+
+  <div class="formulario">
+    <form action="/login" method="POST">
+      <label for="email">Ingrese su mail:</label><br>
+      <input type="email" id="email" name="email" required><br><br>
+
+      <label for="password">Ingrese su contraseña:</label><br>
+      <input type="password" id="password" name="password" required><br><br>
+
+      <button type="submit">
+          Ingresar
+      </button>
+
+    </form>
+</div>
   <a href="/dashboard">Ingresar</a>
 
 </main>
