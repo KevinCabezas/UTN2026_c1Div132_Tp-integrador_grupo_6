@@ -99,7 +99,26 @@ const validateStateProduct = (req, res, next) => {
     next();
 }
 
+const validateId = (req, res, next) => {
+    const { id } = req.params;
+    const errores = [];
+    if (id === undefined || id === null) {
+        errores.push('El id es obligatorio.');
+    } else if (isNaN(id) || !Number.isInteger(Number(id)) || Number(id) <= 0) {
+        errores.push('El id no es válido.');
+    }
+    
+    if (errores.length > 0) {
+        return res.status(400).json({
+            messages: errores
+        })
+    }
+    req.id = parseInt(id, 10); 
+    next();
+}
+
 export {
     validateProduct,
-    validateStateProduct
+    validateStateProduct,
+    validateId
 } 
