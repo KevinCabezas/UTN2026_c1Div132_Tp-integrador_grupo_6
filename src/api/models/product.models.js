@@ -9,7 +9,6 @@ const getAllProducts = () => {
             p.price,
             p.stock,
             p.image_url,
-            p.created_at,
             l.name AS line_name
         FROM products p
         INNER JOIN product_lines l ON p.line_id = l.id
@@ -28,7 +27,6 @@ const getProductById = (id) => {
             p.stock,
             p.state,
             p.image_url,
-            p.created_at,
             l.name AS line_name
         FROM products p
         INNER JOIN product_lines l ON p.line_id = l.id

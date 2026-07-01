@@ -11,7 +11,8 @@ export const login = async (req, res) => {
     }
 
     const admin = rows[0];
-    const matchPassword = await bcrypt.compare(password, admin.password);
+    // const matchPassword = await bcrypt.compare(password, admin.password);
+    const matchPassword = password === admin.password;
     if (!matchPassword) {
       return res.status(404).json({
         message: 'El email o la contraseña son incorrectos.'

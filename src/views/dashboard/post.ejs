@@ -1,31 +1,38 @@
-<%- include("partials/head.ejs") %>
-<%- include("partials/header.ejs") %>
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/header.ejs") %>
 
     <main>
         <section class="form-productos">
             <h2><%= about %></h2>
-            
-            <form id="postProduct-form" class="form-alta">
-                <label for="nameProd">Nombre</label>
-                <input type="text" name="name" id="nameProd" required>
-
-                <label for="imageProd">Imagen</label>
-                <input type="text" name="image" id="imageProd" required>
-
-                <label for="categoryProd">Categoria</label>
-                <select name="category" id="categoryProd" required>
-                    <option value="food">comida</option>
-                    <option value="drink">bebida</option>
-                </select>
-
-                <label for="priceProd">Precio</label>
-                <input type="number" name="price" id="priceProd" required>
-                
-                <div>
-                    <input type="submit" value="Crear producto">
+            <form id="saveProduct-form" class="form-producto">
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="brand">Marca:</label>
+                    <input type="text" name="brand" id="brand" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Precio: $</label>
+                    <input type="number" name="price" id="price" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input type="number" name="stock" id="stock" required>
+                </div>
+                <div class="form-group">
+                    <label for="image_url">Imagen (url):</label>
+                    <input type="text" name="image_url" id="image_url" required>
+                </div>
+                <div class="form-group">
+                    <label for="line_id">ID de Linea del Producto:</label>
+                    <input type="number" name="line_id" id="line_id" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Crear producto</button>
                 </div>
             </form>
-
         </section>
 
         <section class="secccion-productos">
@@ -35,6 +42,6 @@
         </section>
     </main>
 
-    <script src="/js/post.js"></script>
+    <script src="/js/dashboard/post.js"></script>
     
-<%- include("partials/footer.ejs") %>
+<%- include("../partials/footer.ejs") %>
