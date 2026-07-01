@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { join, __dirname } from "../utils/index.js";
-import { indexView, loginView, productsView, listProductsView, customerView } from "../controllers/view.controllers.js";
+import { indexView, loginView, listProductsView } from "../controllers/view.controllers.js";
 
 const router = Router();
 
@@ -11,11 +11,6 @@ router.get("/", indexView);
 router.get("/auth", loginView);
 
 router.get("/dashboard", listProductsView);
-
-
-// rutas del customer
-router.get("/shop", customerView);
-router.get("/shop/products", productsView);
 
 
 

@@ -57,43 +57,43 @@ export const listProductsView = async (req, res) => {
     }
 }
 
-//view customer
+// ESTO NOO VA ACA SE HACE TODO EN EL FRONT
 
-export const customerView = (req, res) => {
-    try {
+// export const customerView = (req, res) => {
+//     try {
 
-        res.render("shop/customer", {
-            title: "Shop",
-        });
+//         res.render("shop/customer", {
+//             title: "Shop",
+//         });
 
-    } catch (error) {
-        console.log("Error obteniendo informacion", error.message);
+//     } catch (error) {
+//         console.log("Error obteniendo informacion", error.message);
 
-        res.status(500).json({
-            message: "Error interno obteniendo la informacion"
-        });
+//         res.status(500).json({
+//             message: "Error interno obteniendo la informacion"
+//         });
 
-    }
-}
+//     }
+// }
 
 
-export const productsView = async (req, res) => {
-    try {
+// export const productsView = async (req, res) => {
+//     try {
 
-        const [rows] = await ProductModels.getAllProducts();
+//         const [rows] = await ProductModels.getAllProducts();
 
-        res.render("shop/products", {
-            title: "Shop",
-            about: "Nuestros productos",
-            productsArray: rows
-        });
+//         res.render("shop/products", {
+//             title: "Shop",
+//             about: "Nuestros productos",
+//             productsArray: rows
+//         });
 
-    } catch (error) {
-        console.log("Error obteniendo informacion", error.message);
+//     } catch (error) {
+//         console.log("Error obteniendo informacion", error.message);
 
-        res.status(500).json({
-            message: "Error interno obteniendo la informacion"
-        });
+//         res.status(500).json({
+//             message: "Error interno obteniendo la informacion"
+//         });
 
-    }
-}
+//     }
+// }
