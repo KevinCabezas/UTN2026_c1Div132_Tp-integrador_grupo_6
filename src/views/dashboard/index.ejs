@@ -18,9 +18,25 @@
                                 <p class="price-producto">$<%= producto.price %></p>
                                 <p class="stock-producto"><%= producto.stock %></p>
                                 <p class="lineId-producto"><%= producto.line_id %></p>
-                                <button class="btn-card-producto btn-copy" data-id="<%= producto.id %>">Copy ID</button> <!-- proximo icono -->
-                                <button class="btn-card-producto btn-modify"><a href="/dashboard/put/<%= producto.id %>">Modify</a></button> <!-- proximo icono -->
-                                <button class="btn-card-producto btn-delete" data-name="<%= producto.name %>" data-id="<%= producto.id %>">Delete</button> <!-- proximo icono -->
+                                <button 
+                                    class="btn-card-producto btn-copy"
+                                    data-id="<%= producto.id %>"
+                                    title="Copiar ID">
+                                    <i data-lucide="copy"></i>
+                                </button>
+                                <a 
+                                    href="/dashboard/put/<%= producto.id %>"
+                                    class="btn-card-producto btn-modify"
+                                    title="Modificar producto">
+                                    <i data-lucide="pencil"></i>
+                                </a>
+                                <button
+                                    class="btn-card-producto btn-delete"
+                                    data-name="<%= producto.name %>"
+                                    data-id="<%= producto.id %>"
+                                    title="Eliminar producto">
+                                    <i data-lucide="trash-2"></i>
+                                </button>
                             </div>
                         <% }) %>
                     </div>
