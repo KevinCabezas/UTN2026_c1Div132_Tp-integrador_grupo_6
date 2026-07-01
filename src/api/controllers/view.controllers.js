@@ -97,3 +97,44 @@ export const productsView = async (req, res) => {
 
     }
 }
+
+export const consultProductView = (req, res) => {
+
+    try {
+
+        res.render("dashboard/get", {
+            title: "Consultar Producto",
+            about: "Consultar producto"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error interno del servidor"
+        });
+
+    }
+
+}
+export const createProductView = (req, res) => {
+    res.render("dashboard/post", {
+        title: "Crear",
+        about: "Crear producto"
+    });
+}
+
+export const updateProductView = (req, res) => {
+    res.render("dashboard/put", {
+        title: "Modificar",
+        about: "Consultar producto por id: "
+    });
+}
+
+export const deleteProductView = (req, res) => {
+    res.render("dashboard/delete", {
+        title: "Eliminar",
+        about: "Consultar producto por id: "
+    });
+}
