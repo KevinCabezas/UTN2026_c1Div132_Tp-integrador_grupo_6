@@ -90,29 +90,43 @@ export const createProduct = async (req, res) => {
 }
 
 export const modifyProduct = async (req, res) => {
-    const {name, brand, price, stock, line_id, image_url, id} = req.body;
     try {
-        const [result] = await ProductModels.updateProduct(name, brand, price, stock, line_id, image_url, id);
-        
+        const { id, name, brand, price, stock, line_id, image_url } = req.body;
+
+        if (!id || !name || !brand || !price || !stock || !line_id || !image_url) {
+            return res.status(400).json({
+                message: "Todos los campos son obligatorios"
+            });
+        }
+
+        const [result] = await ProductModels.updateProduct(
+            name,
+            brand,
+            price,
+            stock,
+            line_id,
+            image_url,
+            id
+        );
+
         if (result.affectedRows === 0) {
             return res.status(404).json({
-                message: "No se actualizó ningún campo"
-            })
+                message: `No se encontró producto con id ${id}`
+            });
         }
-    
+
         return res.status(200).json({
             message: "Producto actualizado correctamente"
         });
 
-
     } catch (error) {
-        console.log(error);
+        console.log("Error modificando producto:", error.message);
 
         res.status(500).json({
             message: "Error interno del servidor"
         });
     }
-}
+};
 export const removeProduct = async (req, res) => {
     const id = req.id;
     try {   

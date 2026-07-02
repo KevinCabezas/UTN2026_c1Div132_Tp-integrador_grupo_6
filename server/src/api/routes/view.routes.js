@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { join, __dirname } from "../utils/index.js";
-import { indexView, loginView, listProductsView } from "../controllers/view.controllers.js";
+import { indexView, loginView, listProductsView,consultProductView,createProductView,updateProductView,deleteProductView } from "../controllers/view.controllers.js";
 
 const router = Router();
 
@@ -11,7 +11,10 @@ router.get("/", indexView);
 router.get("/auth", loginView);
 
 router.get("/dashboard", listProductsView);
-
+router.get("/dashboard/consultar", consultProductView);
+router.get("/dashboard/crear", createProductView);
+router.get("/dashboard/modificar", updateProductView);
+router.get("/dashboard/eliminar", deleteProductView);
 
 
 export default router;

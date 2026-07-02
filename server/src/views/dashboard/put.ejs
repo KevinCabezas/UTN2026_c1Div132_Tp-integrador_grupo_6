@@ -5,6 +5,9 @@
         <section class="form-productos">
             <h2><%= about %></h2>
             <form id="saveProduct-form" class="form-producto">
+
+                <input type="hidden" name="id" id="id" value="<%= producto.id %>">
+                
                 <div class="form-group">
                     <label for="name">Nombre:</label>
                     <input type="text" name="name" id="name" value="<%= producto.name %>" required>

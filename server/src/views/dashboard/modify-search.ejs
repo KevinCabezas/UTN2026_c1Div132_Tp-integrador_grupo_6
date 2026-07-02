@@ -1,0 +1,16 @@
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/header.ejs") %>
+
+<main>
+    <section class="form-productos">
+        <h2>Modificar producto</h2>
+
+        <form action="/dashboard/modificar" method="GET">
+            <label for="id">ID del producto</label>
+            <input type="number" name="id" id="id" required>
+            <button type="submit">Buscar producto</button>
+        </form>
+    </section>
+</main>
+
+<%- include("../partials/footer.ejs") %>

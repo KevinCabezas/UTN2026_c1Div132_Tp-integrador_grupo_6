@@ -5,12 +5,9 @@ import { requireLogin } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-// GET all products
 router.get("/", getAllProducts);
-// GET by id
 router.get("/:id", validateId, getProductById);
-// GET product s`Stock by id
-router.get("/:id", validateId, getProductStockById);
+router.get("/stock/:id", validateId, getProductStockById);
 
 // POST product
 router.post("/", requireLogin, validateProduct, createProduct);

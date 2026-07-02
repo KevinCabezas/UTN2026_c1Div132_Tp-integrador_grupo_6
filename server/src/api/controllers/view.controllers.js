@@ -97,3 +97,70 @@ export const listProductsView = async (req, res) => {
 
 //     }
 // }
+export const consultProductView = (req, res) => {
+
+    try {
+
+        res.render("dashboard/get", {
+            title: "Consultar Producto",
+            about: "Consultar producto"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error interno del servidor"
+        });
+
+    }
+
+}
+export const createProductView = (req, res) => {
+    res.render("dashboard/post", {
+        title: "Crear",
+        about: "Crear producto"
+    });
+}
+
+export const updateProductView = async (req, res) => {
+    try {
+        const { id } = req.query;
+
+        // Si todavía no eligió producto, mostramos el formulario para ingresar ID
+        if (!id) {
+            return res.render("dashboard/modify-search", {
+                title: "Modificar producto",
+                about: "Buscar producto a modificar"
+            });
+        }
+
+        // Buscamos el producto por id
+        const [rows] = await ProductModels.getProductById(id);
+
+        if (rows.length === 0) {
+            return res.status(404).send("No se encontró el producto");
+        }
+
+        // Renderizamos la vista de edición con el producto cargado
+        res.render("dashboard/put", {
+            title: "Modificar producto",
+            about: "Editar producto",
+            producto: rows[0]
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error interno del servidor"
+        });
+    }
+};
+
+export const deleteProductView = (req, res) => {
+    res.render("dashboard/delete", {
+        title: "Eliminar",
+        about: "Consultar producto por id: "
+    });
+}
