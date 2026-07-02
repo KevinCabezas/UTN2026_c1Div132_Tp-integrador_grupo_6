@@ -1,8 +1,10 @@
 <%- include("../partials/head.ejs") %>
 <%- include("../partials/header.ejs") %>
 
-    <main>
+<div class="layout">
+    <%- include("../partials/sidebar.ejs") %>
 
+    <main class="container-secc">
         <section class="form-productos">
             <h2><%= about %></h2>
             
@@ -15,13 +17,10 @@
 
         <section class="secccion-productos">
             <hr>
-            <div id="contenedor-productos">
-
-            </div>
+            <div id="contenedor-productos"></div>
         </section>
     </main>
+</div>
 
-    <!-- Apuntamos a nuestro archivo JavaScript en /public/js/ -->
-    <script src="/js/get.js"></script>
-
+<script src="/js/get.js"></script>
 <%- include("../partials/footer.ejs") %>
