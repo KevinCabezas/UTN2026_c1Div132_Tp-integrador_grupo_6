@@ -4,7 +4,7 @@ import { productRoutes, saleRoutes, authRoutes, viewRoutes } from "./src/api/rou
 import cors from "cors";
 import { loggerURL } from "./src/api/middlewares/middlewares.js";
 import { join, __dirname } from "./src/api/utils/index.js";
-
+import session from "express-session";
 
 const app = express();
 const PORT = environments.port;
@@ -13,6 +13,12 @@ app.use(cors());
 app.use(express.json()); 
 app.use(loggerURL);
 app.use(express.static(join(__dirname, "src/public")));
+
+app.use(session({
+  secret: "algún-secreto",
+  resave: false,
+  saveUninitialized: false,
+}));
 
 app.set("view engine", "ejs");
 app.set("views", join(__dirname, "src/views"));
