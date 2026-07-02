@@ -324,13 +324,13 @@ hr{
   font-size:28px;
 }
 
-#login-form{
+#login-form, #form-register{
   display:flex;
   flex-direction:column;
   gap:16px;
 }
 
-#error-login{
+#error-login, #error-register{
   min-height:20px;
   color:var(--danger);
   font-size:14px;
