@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { join, __dirname } from "../utils/index.js";
 import { indexView, loginView, listProductsView,consultProductView,createProductView,updateProductView,deleteProductView } from "../controllers/view.controllers.js";
+import { requireLogin } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -10,11 +11,11 @@ router.get("/", indexView);
 // rutas del admin
 router.get("/auth", loginView);
 
-router.get("/dashboard", listProductsView);
-router.get("/dashboard/consultar", consultProductView);
-router.get("/dashboard/crear", createProductView);
-router.get("/dashboard/modificar", updateProductView);
-router.get("/dashboard/eliminar", deleteProductView);
+router.get("/dashboard", requireLogin, listProductsView);
+router.get("/dashboard/consultar", requireLogin, consultProductView);
+router.get("/dashboard/crear", requireLogin, createProductView);
+router.get("/dashboard/modificar", requireLogin, updateProductView);
+router.get("/dashboard/eliminar", requireLogin, deleteProductView);
 
 
 export default router;
