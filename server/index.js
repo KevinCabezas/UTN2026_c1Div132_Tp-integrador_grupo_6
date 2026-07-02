@@ -28,11 +28,7 @@ app.use(session({
 app.set("view engine", "ejs");
 app.set("views", join(__dirname, "src/views"));
 
-app.use(session({
-    secret: session_key, // Firma las cookies para evitar manipulacion (debe ser una contraseña segura)
-    resave: false, // Evita guardar la sesion si no hubo cambios
-    saveUninitialized: true // No guarda sesiones vacias
-}));
+
 
 
 app.use('/api/products', productRoutes);
