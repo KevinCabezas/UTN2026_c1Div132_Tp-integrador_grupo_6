@@ -57,46 +57,6 @@ export const listProductsView = async (req, res) => {
     }
 }
 
-// ESTO NOO VA ACA SE HACE TODO EN EL FRONT
-
-// export const customerView = (req, res) => {
-//     try {
-
-//         res.render("shop/customer", {
-//             title: "Shop",
-//         });
-
-//     } catch (error) {
-//         console.log("Error obteniendo informacion", error.message);
-
-//         res.status(500).json({
-//             message: "Error interno obteniendo la informacion"
-//         });
-
-//     }
-// }
-
-
-// export const productsView = async (req, res) => {
-//     try {
-
-//         const [rows] = await ProductModels.getAllProducts();
-
-//         res.render("shop/products", {
-//             title: "Shop",
-//             about: "Nuestros productos",
-//             productsArray: rows
-//         });
-
-//     } catch (error) {
-//         console.log("Error obteniendo informacion", error.message);
-
-//         res.status(500).json({
-//             message: "Error interno obteniendo la informacion"
-//         });
-
-//     }
-// }
 export const consultProductView = (req, res) => {
 
     try {
@@ -128,7 +88,7 @@ export const updateProductView = async (req, res) => {
     try {
         const { id } = req.query;
 
-        // Si todavía no eligió producto, mostramos el formulario para ingresar ID
+        // Si todavia no eligio producto, mostramos el formulario para ingresar ID
         if (!id) {
             return res.render("dashboard/modify-search", {
                 title: "Modificar producto",

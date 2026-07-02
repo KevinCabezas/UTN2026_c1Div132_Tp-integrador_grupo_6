@@ -4,7 +4,7 @@ dotenv.config();
 
 export default {
   port: process.env.DB_PORT || 3001,
-
+  session_key: process.env.SESSION_KEY,
   db: {
     host: process.env.DB_HOST,
     name: process.env.DB_NAME,

@@ -12,7 +12,7 @@ const getAllProducts = () => {
             l.name AS line_name
         FROM products p
         INNER JOIN product_lines l ON p.line_id = l.id
-        WHERE p.state = 1
+        WHERE p.state = 1 
     `;
     return connection.query(sql);
 }
