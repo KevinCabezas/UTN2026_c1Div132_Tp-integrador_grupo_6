@@ -13,15 +13,15 @@ const getAdminByEmail = (email) => {
     return connection.query(sql, [email]);
 }
 
-// const createAdmin = (email, password) => {
-//     const sql = `
-//         INSERT INTO admins (email, password)
-//         VALUES (?, ?)
-//     `;
-//     return connection.query(sql, [email, password]);
-// }
+const createAdmin = (email, password) => {
+    const sql = `
+        INSERT INTO admins (email, password)
+        VALUES (?, ?)
+    `;
+    return connection.query(sql, [email, password]);
+}
 
 export default {
     getAdminByEmail,
-    // createAdmin
+    createAdmin
 };
