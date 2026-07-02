@@ -1,37 +1,46 @@
 <%- include("../partials/head.ejs") %>
 <%- include("../partials/header.ejs") %>
 
-    <main>
+<div class="layout">
+    <%- include("../partials/sidebar.ejs") %>
+
+    <main class="container-secc">
         <section class="form-productos">
             <h2><%= about %></h2>
-            <form id="saveProduct-form" class="form-producto">
 
+            <form id="saveProduct-form" class="form-producto">
                 <input type="hidden" name="id" id="id" value="<%= producto.id %>">
-                
+
                 <div class="form-group">
                     <label for="name">Nombre:</label>
                     <input type="text" name="name" id="name" value="<%= producto.name %>" required>
                 </div>
+
                 <div class="form-group">
                     <label for="brand">Marca:</label>
                     <input type="text" name="brand" id="brand" value="<%= producto.brand %>" required>
                 </div>
+
                 <div class="form-group">
                     <label for="price">Precio: $</label>
                     <input type="number" name="price" id="price" value="<%= producto.price %>" required>
                 </div>
+
                 <div class="form-group">
                     <label for="stock">Stock:</label>
                     <input type="number" name="stock" id="stock" value="<%= producto.stock %>" required>
                 </div>
+
                 <div class="form-group">
                     <label for="image_url">Imagen (url):</label>
                     <input type="text" name="image_url" id="image_url" value="<%= producto.image_url %>" required>
                 </div>
+
                 <div class="form-group">
                     <label for="line_id">ID de Linea del Producto:</label>
                     <input type="number" name="line_id" id="line_id" value="<%= producto.line_id %>" required>
                 </div>
+
                 <div class="form-group">
                     <button type="submit">Actualizar producto</button>
                 </div>
@@ -39,12 +48,10 @@
         </section>
 
         <section class="secccion-productos">
-            <div id="contenedor-productos">
-                <!-- Aca ira nuestro mensaje de exito o error -->
-            </div>
+            <div id="contenedor-productos"></div>
         </section>
     </main>
+</div>
 
-    <script src="/js/dashboard/put.js"></script>
-    
+<script src="/js/dashboard/put.js"></script>
 <%- include("../partials/footer.ejs") %>

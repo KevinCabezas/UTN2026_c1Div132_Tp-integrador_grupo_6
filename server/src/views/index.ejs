@@ -1,8 +1,14 @@
 <%- include("./partials/head.ejs") %>
-<%- include("./partials/header.ejs") %>
 
 <main class="container-main">
-  <section>
-    <a href="/auth" class="btn-admin">Ingresar como admin</a>
-  </section>
+  <div class="home-box">
+    <h1>Pumpernic</h1>
+    <p>Seleccioná cómo querés ingresar</p>
+
+    <div class="home-actions">
+      <a href="/auth" class="btn-home">Ingresar como administrador</a>
+    </div>
+  </div>
 </main>
+
+<%- include("./partials/footer.ejs") %>
