@@ -1,4 +1,4 @@
-const VALID_LINES_ID = [1, 2];
+const VALID_LINES_ID = [1, 2, 3, 4];
 
 const validateProduct = (req, res, next) => {
     const { name, brand, price, stock, line_id, image_url } = req.body;
