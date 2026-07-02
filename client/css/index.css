@@ -1,0 +1,74 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    :root {
+      --primary-color: rgb(141, 157, 174);
+      --secondary-color: #94db7c;
+      --text-color: #111827;
+      --bg-color: #f3f4f6;
+      --border-radius: 8px;
+      --color-b: #e5e7eb;
+    }
+
+    button {
+      border-radius: 100px;
+      padding: 8px 16px;
+      border: none;
+
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--primary-color);
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 350px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, .15);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      background: var(--secondary-color);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--primary-color);
+    }

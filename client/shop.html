@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop</title>
+
+  <link rel="stylesheet" href="css/shop.css">
+</head>
+
+<body>
+
+  <head>
+    <nav class="container-nav">
+      <a href="">sdfsd</a>
+      <div class="buttons-nav">
+        <a href="cart.html">carrito</a>
+        <a href="index.html">Cancelar</a>
+      </div>
+    </nav>
+  </head>
+  <main>
+    <h1>Productos</h1>
+    <div id="lista-productos" class="container-products"></div>
+
+    <script type="module">
+      import { getListProducts } from "./js/api.js";
+
+      const listProducts = document.getElementById("lista-productos");
+
+      //=================== LOCAL STORAGE ===================//
+
+      function obtenerCarrito() {
+        return JSON.parse(localStorage.getItem("carrito")) || [];
+      }
+
+      function guardarCarrito(carrito) {
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+      }
+
+      //=================== CANTIDAD ===================//
+
+      function aumentarCantidad(e) {
+        const card = e.target.closest(".card-product");
+
+        const spanQuantity = card.querySelector(".cantidad");
+
+        spanQuantity.textContent = Number(spanQuantity.textContent) + 1;
+      }
+
+      function disminuirCantidad(e) {
+        const card = e.target.closest(".card-product");
+
+        const spanQuantity = card.querySelector(".cantidad");
+
+        let cantidad = Number(spanQuantity.textContent);
+
+        if (cantidad > 1) {
+          spanQuantity.textContent = cantidad - 1;
+        }
+      }
+
+      //=================== AGREGAR AL CARRITO ===================//
+
+      function agregarAlCarrito(e) {
+        const card = e.target.closest(".card-product");
+
+        const id = Number(card.dataset.id);
+        const nombre = card.dataset.name;
+        const marca = card.dataset.brand;
+        const precio = Number(card.dataset.price);
+
+        const cantidad = Number(
+          card.querySelector(".cantidad").textContent
+        );
+
+        const carrito = obtenerCarrito();
+
+        const productoExistente = carrito.find(
+          producto => producto.id === id
+        );
+
+        if (productoExistente) {
+          productoExistente.cantidad += cantidad;
+        } else {
+          carrito.push({
+            id,
+            nombre,
+            marca,
+            precio,
+            cantidad
+          });
+        }
+
+        guardarCarrito(carrito);
+
+        alert(`${cantidad} ${nombre} agregado(s) al carrito`);
+
+        // Reiniciar cantidad seleccionada
+        card.querySelector(".cantidad").textContent = 1;
+      }
+
+      //=================== RENDER ===================//
+
+      async function renderProducts() {
+        try {
+
+          const response = await getListProducts();
+
+          const products = response.payload;
+
+          listProducts.innerHTML = "";
+
+          products.forEach(product => {
+
+            listProducts.innerHTML += `
+          <div
+            class="card-product"
+            data-id="${product.id}"
+            data-name="${product.name}"
+            data-brand="${product.brand}"
+            data-price="${product.price}"
+          >
+
+            <div class="card-img">
+              <img
+                src="./assets/img-prueva.webp"
+                alt="${product.name}"
+              >
+            </div>
+
+            <div class="card-footer">
+
+              <h3>${product.name}</h3>
+
+              <p>Marca: ${product.brand}</p>
+
+              <p>Precio: $${product.price}</p>
+
+              <div class="container-btn">
+
+                <div class="btn-quantity">
+                  <button class="btn-minus">-</button>
+
+                  <span class="cantidad">1</span>
+
+                  <button class="btn-plus">+</button>
+                </div>
+
+                <button class="btn-add">
+                  Agregar al carrito
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+        `;
+          });
+
+          // Eventos +
+
+          document.querySelectorAll(".btn-plus").forEach(btn => {
+            btn.addEventListener("click", aumentarCantidad);
+          });
+
+          // Eventos -
+
+          document.querySelectorAll(".btn-minus").forEach(btn => {
+            btn.addEventListener("click", disminuirCantidad);
+          });
+
+          // Eventos agregar
+
+          document.querySelectorAll(".btn-add").forEach(btn => {
+            btn.addEventListener("click", agregarAlCarrito);
+          });
+
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      renderProducts();
+    </script>
+  </main>
+</body>
+
+</html>

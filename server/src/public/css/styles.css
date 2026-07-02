@@ -136,23 +136,9 @@ a {
   border-right: 1px solid;
   border-color: var(--color-b);
 }
-.enlaces{
-    list-style:none;
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-    margin-top:20px;
+
+.container-secc {
+  margin-left: 200px;
+  padding: 20px;
 }
-.enlace a{
-    display:block;
-    text-decoration:none;
-    color:var(--text-color);
-    background-color: rgb(161, 161, 65);
-    padding:12px 15px;
-    border-radius:8px;
-    transition:.3s;
-}
-.enlace a:hover{
-    background:var(--primary-color);
-    color:white;
-}
+

@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Welcome</title>
+
+  <link rel="stylesheet" href="./css/index.css">
 </head>
+
 <body>
-  
+  <header>
+
+  </header>
+  <main>
+    <div class="container">
+      <h2>Iniciar compras</h2>
+
+      <form id="form">
+        <label for="nombre">Ingrese su nombre</label>
+
+        <input id="nombre" type="text" placeholder="Nombre..." required>
+
+        <button type="submit">
+          Ingresar
+        </button>
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById("form");
+      const input = document.getElementById("nombre");
+      const nombreGuardado = localStorage.getItem("nombre");
+
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const nombre = input.value.trim();
+
+        if (!nombre) {
+          alert("Ingrese un nombre valido");
+          return;
+        }
+
+        localStorage.setItem("nombre", nombre);
+        window.location.href = "shop.html";
+        input.value = "";
+      });
+    </script>
+  </main>
 </body>
+
 </html>

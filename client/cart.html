@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Carrito</title>
+  <link rel="stylesheet" href="./css/cart.css">
+  <style>
+   
+  </style>
+
+</head>
+
+<body>
+
+  <div class="ticket">
+
+    <h1>Ticket de Compra</h1>
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Producto</th>
+          <th>Cant.</th>
+          <th>Unit.</th>
+          <th>Sub total</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="detalle"></tbody>
+
+    </table>
+
+    <div class="total">
+      Total: $<span id="totalCompra">0</span>
+    </div>
+
+    <button id="btnComprar">
+      Finalizar compra
+    </button>
+
+    <button id="btnImprimir">
+      Imprimir Ticket
+    </button>
+
+    <p id="mensaje"></p>
+
+  </div>
+
+  <script type="module">
+
+    import { createSale } from "./js/api.js";
+
+    const detalle = document.getElementById("detalle");
+
+    const totalCompra = document.getElementById("totalCompra");
+
+    const btnComprar = document.getElementById("btnComprar");
+
+    const btnImprimir = document.getElementById("btnImprimir");
+
+    const mensaje = document.getElementById("mensaje");
+
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    let total = 0;
+
+    carrito.forEach(product => {
+
+      const subtotal = product.precio * product.cantidad;
+
+      total += subtotal;
+
+      detalle.innerHTML += `
+
+      <tr>
+
+        <td>${product.nombre}</td>
+
+        <td>${product.cantidad}</td>
+
+        <td>$${product.precio}</td>
+
+        <td>$${subtotal}</td>
+
+      </tr>
+
+  `;
+
+    });
+
+    totalCompra.textContent = total.toFixed(2);
+
+    btnComprar.addEventListener("click", async () => {
+
+      const sale = {
+
+        customer_name: localStorage.getItem("nombre"),
+
+        products: carrito.map(p => ({
+
+          product_id: p.id,
+
+          quantity: p.cantidad
+
+        }))
+
+      };
+
+      try {
+
+        await createSale(sale);
+
+        localStorage.removeItem("carrito");
+
+        mensaje.textContent = "Compra realizada correctamente.";
+
+        mensaje.className = "success";
+
+        btnComprar.style.display = "none";
+
+        btnImprimir.style.display = "block";
+
+      } catch (error) {
+
+        mensaje.textContent = "No se pudo realizar la compra.";
+
+        mensaje.className = "error";
+
+      }
+
+    });
+
+    btnImprimir.addEventListener("click", () => {
+
+      window.print();
+
+    });
+
+  </script>
+
+</body>
+
+</html>
