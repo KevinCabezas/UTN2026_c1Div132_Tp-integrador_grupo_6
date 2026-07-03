@@ -27,6 +27,9 @@ app.use(session({
 app.set("view engine", "ejs");
 app.set("views", join(__dirname, "src/views"));
 
+
+
+
 app.use('/api/products', productRoutes);
 app.use('/api/sales', saleRoutes);
 app.use('/api/auth', authRoutes);

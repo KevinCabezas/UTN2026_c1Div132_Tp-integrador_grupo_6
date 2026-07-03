@@ -4,13 +4,13 @@ const saveProductForm = document.getElementById("saveProduct-form");
 saveProductForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const id = document.getElementById("id").value;
+    const id = Number(document.getElementById("id").value);
     const name = document.getElementById("name").value;
     const brand = document.getElementById("brand").value;
-    const price = document.getElementById("price").value;
-    const stock = document.getElementById("stock").value;
+    const price = Number(document.getElementById("price").value);
+    const stock = Number(document.getElementById("stock").value);
     const image_url = document.getElementById("image_url").value;
-    const line_id = document.getElementById("line_id").value;
+    const line_id = Number(document.getElementById("line_id").value);
 
     const productUpdated = {
         id,
@@ -34,7 +34,8 @@ saveProductForm.addEventListener("submit", async (event) => {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || "Error al actualizar el producto");
+            const mensaje = data.messages ? data.messages.join("\n") : (data.message || "Error al actualizar el producto");
+            throw new Error(mensaje);
         }
 
         alert("Producto actualizado correctamente");
