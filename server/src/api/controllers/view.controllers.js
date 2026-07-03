@@ -35,21 +35,6 @@ export const loginView = async (req, res) => {
         });
     }
 }
-export const registerView = async (req, res) => {
-
-    try {
-
-        res.render("auth/register", {
-            title: "Register",
-        })
-    } catch (error) {
-        console.log("Error obteniendo informacion", error.message);
-
-        res.status(500).json({
-            message: "Error interno obteniendo la informacion"
-        });
-    }
-}
 
 export const listProductsView = async (req, res) => {
     try {

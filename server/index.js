@@ -7,6 +7,7 @@ import { join, __dirname } from "./src/api/utils/index.js";
 import session from "express-session";
 
 const app = express();
+
 const { port, session_key } = environments;
 const PORT = environments.port;
 
@@ -19,7 +20,7 @@ app.use(loggerURL);
 app.use(express.static(join(__dirname, "src/public")));
 
 app.use(session({
-  secret: "algún-secreto",
+  secret: "session_key",
   resave: false,
   saveUninitialized: false,
 }));
