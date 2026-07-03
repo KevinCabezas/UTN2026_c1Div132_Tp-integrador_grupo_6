@@ -12,7 +12,7 @@
                         Estamos directamente haciendo la accion del innerHTML -->
                         <% productsArray.forEach(producto=> { %>
                             <div class="card-producto" id="card-producto-<%= producto.id %>">
-                                <img class="image-producto" src="<%= producto.image_url %>" alt="<%= producto.name %>">
+                                <img class="image-producto" src="<%= producto.image_url %>" alt="<%= producto.image_url %>">
                                 <h4 class="name-producto"><%= producto.name %></h4>
                                 <p class="id-producto">ID: <%= producto.id %></p>
                                 <p class="price-producto">$<%= producto.price %></p>

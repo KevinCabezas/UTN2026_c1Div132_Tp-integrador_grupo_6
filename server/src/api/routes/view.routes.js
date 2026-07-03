@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { join, __dirname } from "../utils/index.js";
+// import { join, __dirname } from "../utils/index.js";
 import { indexView, loginView, listProductsView,consultProductView,createProductView,updateProductView,deleteProductView } from "../controllers/view.controllers.js";
 import { requireLogin } from "../middlewares/auth.middleware.js";
 

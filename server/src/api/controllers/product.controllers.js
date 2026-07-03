@@ -9,10 +9,10 @@ export const getAllProducts = async (req, res) => {
                 message: "No se encontraron productos"
             });
         }
-    
+
         res.status(200).json({
             payload: rows,
-            total: rows.length 
+            total: rows.length
         });
 
     } catch (error) {
@@ -26,14 +26,14 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
     const id = req.id;
-    try {  
+    try {
         const [rows] = await ProductModels.getProductById(id);
 
         if (rows.length === 0) {
             return res.status(404).json({
                 message: `No se encontró producto con id ${id}`
             });
-        }   
+        }
         res.status(200).json({
             payload: rows
         });
@@ -49,14 +49,14 @@ export const getProductById = async (req, res) => {
 
 export const getProductStockById = async (req, res) => {
     const id = req.id;
-    try {  
+    try {
         const [rows] = await ProductModels.getProductStock(id);
 
         if (rows.length === 0) {
             return res.status(404).json({
                 message: `No se encontró producto con id ${id}`
             });
-        }   
+        }
         res.status(200).json({
             payload: rows
         });
@@ -71,13 +71,16 @@ export const getProductStockById = async (req, res) => {
 }
 
 export const createProduct = async (req, res) => {
-    const { name, brand, price, stock, line_id, image_url } = req.body;
+    const { name, brand, price, stock, line_id } = req.body;
     try {
+        const image_url = req.file ? `/uploads/${req.file.filename}` : null;
+
         const [rows] = await ProductModels.createProduct(name, brand, price, stock, line_id, image_url);
 
         res.status(201).json({
             message: "Producto creado con exito",
-            productId: rows.insertId
+            productId: rows.insertId,
+            image_url
         });
 
     } catch (error) {
@@ -129,9 +132,9 @@ export const modifyProduct = async (req, res) => {
 };
 export const removeProduct = async (req, res) => {
     const id = req.id;
-    try {   
+    try {
         await ProductModels.deleteProduct(id);
-    
+
         res.status(200).json({
             message: `Producto con id ${id} eliminado exitosamente`
         });
@@ -140,7 +143,7 @@ export const removeProduct = async (req, res) => {
         console.log(`Error en peticion DELETE`, error);
 
         res.status(500).json({
-            message : "Error interno del servidor"
+            message: "Error interno del servidor"
         });
     }
 }

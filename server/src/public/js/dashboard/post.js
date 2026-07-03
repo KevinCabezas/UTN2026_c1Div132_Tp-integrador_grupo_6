@@ -8,25 +8,27 @@ saveProductForm.addEventListener("submit", async (event) => {
     const brand = document.getElementById("brand").value;
     const price = Number(document.getElementById("price").value);
     const stock = Number(document.getElementById("stock").value);
-    const image_url = document.getElementById("image_url").value;
+    const image = document.getElementById("image").files[0];
     const line_id = Number(document.getElementById("line_id").value);
 
-    const newProduct = {
-        name,
-        brand,
-        price,
-        stock,
-        image_url,
-        line_id
-    };
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("brand", brand);
+    formData.append("price", price);
+    formData.append("stock", stock);
+    formData.append("line_id", line_id);
+    formData.append("image", image);
+
 
     try {
         const response = await fetch("/api/products", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newProduct)
+            // quitamos el header para que no mezclar json con formdata ya se susa para mandar el file con multer
+            // headers: {
+            //     "Content-Type": "application/json" 
+            // },
+            body: formData
         });
 
         const data = await response.json();

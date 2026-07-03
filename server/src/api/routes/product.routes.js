@@ -2,6 +2,8 @@ import { Router } from "express";
 import { validateProduct, validateId } from "../middlewares/product.middleware.js";
 import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct, getProductStockById } from "../controllers/product.controllers.js";
 import { requireLogin } from "../middlewares/auth.middleware.js";
+import { upload } from "../middlewares/upload.middleware.js";
+
 
 const router = Router();
 
@@ -10,7 +12,7 @@ router.get("/:id", validateId, getProductById);
 router.get("/stock/:id", validateId, getProductStockById);
 
 // POST product
-router.post("/", requireLogin, validateProduct, createProduct);
+router.post("/", requireLogin,  upload.single("image"), validateProduct, createProduct);
 // UPDATE product
 router.put("/", requireLogin, validateProduct, modifyProduct);
 // DELETE product

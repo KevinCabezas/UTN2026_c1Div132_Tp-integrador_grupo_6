@@ -1,9 +1,13 @@
-const VALID_LINES_ID = [1, 2];
+const VALID_LINES_ID = [1, 2, 3, 4];
 
 const validateProduct = (req, res, next) => {
-    const { name, brand, price, stock, line_id, image_url } = req.body;
+    const { name, brand, price, stock, line_id } = req.body;
     const errores = [];
 
+    const priceNum = Number(price);
+    const stockNum = Number(stock);
+    const lineIdNum = Number(line_id);
+    console.log(req.body)
     // Validacion name
     if (name === undefined || name === null) {
         errores.push('El nombre del producto es obligatorio.');
@@ -17,7 +21,7 @@ const validateProduct = (req, res, next) => {
             errores.push('El nombre del producto no debe superar los 50 caracteres.');
         }
     }
-    
+
     // Validacion brand
     if (brand === undefined || brand === null) {
         errores.push('La marca del producto es obligatoria.');
@@ -33,45 +37,32 @@ const validateProduct = (req, res, next) => {
     }
 
     // Validacion price
-    if (price === undefined || price === null) {
+    if (priceNum === undefined || priceNum === null) {
         errores.push('El precio del producto es obligatorio.');
-    } else if (typeof price !== 'number' || isNaN(price)) {
+    } else if (typeof priceNum !== 'number' || isNaN(priceNum)) {
         errores.push('El precio del producto no es válido.');
-    } else if (price <= 0) {
+    } else if (priceNum <= 0) {
         errores.push('El precio del producto debe ser mayor a 0.');
     }
 
     // Validacion stock
-    if (stock === undefined || stock === null) {
-        errores.push('El stock del producto es obligatorio.');
-    } else if (typeof stock !== 'number' || isNaN(stock) || !Number.isInteger(stock)) {
+    if (stockNum === undefined || stockNum === null) {
+        errores.push('El stockNum del producto es obligatorio.');
+    } else if (typeof stockNum !== 'number' || isNaN(stockNum) || !Number.isInteger(stockNum)) {
         errores.push('El stock del producto no es válido.');
-    } else if (stock < 0) {
+    } else if (stockNum < 0) {
         errores.push('El stock debe ser un número positivo.');
     }
 
     // Validacion line_id
-    if (line_id === undefined || line_id === null) {
+    if (lineIdNum === undefined || lineIdNum === null) {
         errores.push('El id de linea del producto es obligatorio.');
-    } else if (typeof line_id !== 'number' || isNaN(line_id) || !Number.isInteger(line_id)) {
+    } else if (typeof lineIdNum !== 'number' || isNaN(lineIdNum) || !Number.isInteger(lineIdNum)) {
         errores.push('El id de linea del producto no es válido.');
-    } else if (!VALID_LINES_ID.includes(line_id)) {
+    } else if (!VALID_LINES_ID.includes(lineIdNum)) {
         errores.push('El id de linea del producto no existe.');
     }
 
-    // Validacion image_url
-    if (image_url === undefined || image_url === null) {
-        errores.push('La URL de la imagen del producto es obligatoria.');
-    } else if (typeof image_url !== 'string') {
-        errores.push('La URL de la imagen del producto no es válida.');
-    } else {
-        const imageUrlLength = image_url.trim().length;
-        if (imageUrlLength <= 5) {
-            errores.push('La URL de la imagen del producto debe tener más de 5 caracteres.');
-        } else if (imageUrlLength > 255) {
-            errores.push('La URL de la imagen del producto no debe superar los 255 caracteres.');
-        }
-    }
 
     if (errores.length > 0) {
         return res.status(400).json({
@@ -90,7 +81,7 @@ const validateStateProduct = (req, res, next) => {
     } else if (typeof state !== 'boolean') {
         errores.push('El estado del producto debe ser un booleano.');
     }
-    
+
     if (errores.length > 0) {
         return res.status(400).json({
             messages: errores
@@ -107,13 +98,13 @@ const validateId = (req, res, next) => {
     } else if (isNaN(id) || !Number.isInteger(Number(id)) || Number(id) <= 0) {
         errores.push('El id no es válido.');
     }
-    
+
     if (errores.length > 0) {
         return res.status(400).json({
             messages: errores
         })
     }
-    req.id = parseInt(id, 10); 
+    req.id = parseInt(id, 10);
     next();
 }
 
