@@ -97,6 +97,37 @@ button,input{
   padding:32px;
 }
 
+.container-header{
+  margin-left:240px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 24px;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+}
+
+.container-header .logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:0;
+}
+
+.container-header .logo-container{
+  min-height:auto;
+  border:none;
+  background:transparent;
+}
+
+#btn-logout{
+  background:var(--danger);
+}
+
+#btn-logout:hover{
+  background:var(--danger-dark);
+}
+
 .secccion-productos, .form-productos{
   background:var(--panel);
   border:1px solid var(--border);
@@ -246,6 +277,9 @@ hr{
     margin-left:200px;
     padding:20px;
   }
+  .container-header{
+    margin-left:200px;
+  }
 }
 
 @media (max-width:768px){
@@ -265,7 +299,12 @@ hr{
     margin-left:0;
     padding:16px;
   }
-
+   .container-header{
+    margin-left:0;
+    flex-direction:column;
+    gap:10px;
+    align-items:flex-start;
+  }
   .enlaces{
     flex-direction:row;
     flex-wrap:wrap;

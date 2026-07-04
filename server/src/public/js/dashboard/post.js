@@ -1,4 +1,4 @@
-// aca va la logica de interaccion con la pagina, es decir la interfaz, por ej botones, click,etcconst saveProductForm = document.getElementById("saveProduct-form");
+// aca va la logica de interaccion con la pagina, es decir la interfaz, por ej botones, click,etc
 
 const saveProductForm = document.getElementById("saveProduct-form");
 saveProductForm.addEventListener("submit", async (event) => {

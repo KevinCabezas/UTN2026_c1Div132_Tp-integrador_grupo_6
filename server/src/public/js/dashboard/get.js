@@ -27,7 +27,7 @@ getByIdForm.addEventListener("submit", async (event) => {
                 <p class="price-producto">$${producto.price}</p>
                 <p class="stock-producto">${producto.stock}</p>
                 <p class="lineId-producto">${producto.line_name}</p>
-                <a href="/dashboard/put/${producto.id}" class="btn-card-producto btn-modify" title="Modificar producto">
+                <a href="/dashboard/modificar?id=${producto.id}" class="btn-card-producto btn-modify" title="Modificar producto">
                     <i data-lucide="pencil"></i>
                 </a>
             </div>
