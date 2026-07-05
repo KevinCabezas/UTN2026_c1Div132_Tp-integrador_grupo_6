@@ -17,6 +17,23 @@ const getAllProducts = () => {
     return connection.query(sql);
 }
 
+const getAllProductsForLine = (lineId) => {
+    const sql = `
+        SELECT
+            p.id,
+            p.name,
+            p.brand,
+            p.price,
+            p.stock,
+            p.image_url,
+            l.name AS line_name
+        FROM products p
+        INNER JOIN product_lines l ON p.line_id = l.id
+        WHERE p.state = 1 AND p.line_id = ?
+    `;
+    return connection.query(sql, [lineId]);
+}
+
 const getProductById = (id) => {
     const sql = `
         SELECT
@@ -76,5 +93,6 @@ export default {
     getProductStock,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getAllProductsForLine
 }

@@ -147,3 +147,29 @@ export const removeProduct = async (req, res) => {
         });
     }
 }
+
+export const getProductsForLine = async (req, res) => {
+    const { id } = req.params;
+    console.log(id)
+    try {
+        const [rows, fields] = await ProductModels.getAllProductsForLine(id);
+
+        if (rows.length === 0) {
+            return res.status(404).json({
+                message: "No se encontraron productos"
+            });
+        }
+
+        res.status(200).json({
+            payload: rows,
+            total: rows.length
+        });
+
+    } catch (error) {
+        console.log("Error obteniendo los productos: ", error);
+
+        res.status(500).json({
+            message: "Error interno al obtener productos"
+        });
+    }
+}

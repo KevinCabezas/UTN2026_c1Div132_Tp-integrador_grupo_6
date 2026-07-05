@@ -13,26 +13,47 @@
 
   <header>
     <nav class="container-nav">
-      <a href="">sdfsd</a>
-      <div class="buttons-nav">
+      <a href="">
+        <img src="./assets/logo.png" alt="Mundo tech">
+        <span class="world">MUNDO</span>
+        <span class="tech">TECH</span>
+      </a>
+      <div class="btn-nav">
         <a href="cart.html">
 
           <iconify-icon icon="mdi:cart-outline" class="icon-cart"></iconify-icon>
           <iconify-icon icon="fluent:arrow-right-32-filled" class="icon-cart"></iconify-icon>
-         
+
           <!-- <a href="index.html">Cancelar</a> -->
         </a>
       </div>
     </nav>
   </header>
-  <main >
-    <h1>Productos</h1>
-    <div id="lista-productos" class="container-products"></div>
+  <main>
+
+    <section class="section-products">
+      <h1>Nuestros productos</h1>
+
+      <div class="container-lines">
+        <button id="all">Ver todo</button>
+        <button id="tv">Televisores</button>
+        <button id="sound">Sonido</button>
+        <button id="laptop">Laptops</button>
+        <button id="phones">Celulares</button>
+      </div>
+      <div id="lista-productos" class="container-products"></div>
+    </section>
 
     <script type="module">
-      import { getListProducts } from "./js/api.js";
+      import { getListProducts, getListProductsForLines } from "./js/api.js";
 
       const listProducts = document.getElementById("lista-productos");
+
+      const btnAll = document.getElementById("all");
+      const btnTv = document.getElementById("tv");
+      const btnSound = document.getElementById("sound");
+      const btnLaptop = document.getElementById("laptop");
+      const btnPhones = document.getElementById("phones");
 
       //=================== LOCAL STORAGE ===================//
 
@@ -188,6 +209,16 @@
           console.error(error);
         }
       }
+
+
+      btnTv.addEventListener("click", async () => {
+        const response = await getListProductsForLines(1);
+
+        const products = response.payload;
+        console.log(products)
+        // renderProducts(products)
+
+      });
 
       renderProducts();
     </script>

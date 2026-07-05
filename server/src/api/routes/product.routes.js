@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validateProduct, validateId } from "../middlewares/product.middleware.js";
-import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct, getProductStockById } from "../controllers/product.controllers.js";
+import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct, getProductStockById,getProductsForLine } from "../controllers/product.controllers.js";
 import { requireLogin } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/upload.middleware.js";
 
@@ -8,6 +8,7 @@ import { upload } from "../middlewares/upload.middleware.js";
 const router = Router();
 
 router.get("/", getAllProducts);
+router.get("/line/:id", getProductsForLine);
 router.get("/:id", validateId, getProductById);
 router.get("/stock/:id", validateId, getProductStockById);
 

@@ -17,6 +17,23 @@ export async function getListProducts() {
 
 }
 
+export async function getListProductsForLines(id) {
+
+  try {
+    const response = await fetch(`${API_URL}/products/line/${id}`);
+    if (!response.ok) {
+      throw new Error("Error HTTP: ", response.status);
+    }
+    const data = await response.json();
+
+    return data;
+
+  } catch (error) {
+    console.error("Error al obtener los datos:", error)
+  }
+
+}
+
 
 export async function createSale(sale) {
   try {
