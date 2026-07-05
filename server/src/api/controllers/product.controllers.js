@@ -78,6 +78,28 @@ export const getProductStockById = async (req, res) => {
     }
 }
 
+export const getAllProductLines = async (req, res) => {
+    try {
+        const [rows] = await ProductModels.getAllLines(); 
+
+        if (rows.length === 0) {
+            return res.status(404).json({
+                message: 'No se encontraron líneas de productos.'
+            });
+        }
+
+        res.status(200).json({
+            payload: rows
+        });
+        
+    } catch (error) {
+        console.log('Error obteniendo líneas de productos: ', error);
+        res.status(500).json({
+            message: 'Error interno al obtener las líneas de productos.'
+        });
+    }
+}
+
 export const createProduct = async (req, res) => {
     const { name, brand, price, stock, line_id } = req.body;
     try {

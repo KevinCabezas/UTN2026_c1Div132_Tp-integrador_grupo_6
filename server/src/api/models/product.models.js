@@ -71,35 +71,13 @@ const deleteProduct = (id) => {
     return connection.query(sql, [id]);
 }
 
-const getAllProductsAdmin = () => {
+const getAllLines = () => {
     const sql = `
         SELECT
-            p.id,
-            p.name,
-            p.brand,
-            p.price,
-            p.stock,
-            p.state,
-            p.image_url,
-            p.line_id,
-            l.name AS line_name
-        FROM products p
-        INNER JOIN product_lines l ON p.line_id = l.id
+            id,
+            name
+        FROM product_lines
     `;
-    return connection.query(sql);
-}
-
-const activateProduct = (id) => {
-    const sql = `
-        UPDATE products
-        SET state = TRUE
-        WHERE id = ?
-    `;
-    return connection.query(sql, [id]);
-}
-
-const countActiveProducts = () => {
-    const sql = `SELECT COUNT(*) AS total FROM products WHERE state = 1`;
     return connection.query(sql);
 }
 
@@ -108,6 +86,7 @@ export default {
     getAllProductsAdmin,
     getProductById,
     getProductStock,
+    getAllLines,
     createProduct,
     updateProduct,
     deleteProduct,
