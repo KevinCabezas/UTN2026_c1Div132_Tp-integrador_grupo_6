@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validateProduct, validateId } from "../middlewares/product.middleware.js";
-import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct, getProductStockById } from "../controllers/product.controllers.js";
+import { createProduct, getAllProducts, getProductById, modifyProduct, removeProduct, getProductStockById, activateProduct  } from "../controllers/product.controllers.js";
 import { requireLogin } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/upload.middleware.js";
 
@@ -11,6 +11,7 @@ router.get("/", getAllProducts);
 router.get("/:id", validateId, getProductById);
 router.get("/stock/:id", validateId, getProductStockById);
 
+router.post("/:id/activar", requireLogin, validateId, activateProduct);
 // POST product
 router.post("/", requireLogin,  upload.single("image"), validateProduct, createProduct);
 // UPDATE product

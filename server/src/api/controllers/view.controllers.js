@@ -39,7 +39,7 @@ export const loginView = async (req, res) => {
 export const listProductsView = async (req, res) => {
     try {
 
-        const [rows] = await ProductModels.getAllProducts();
+        const [rows] = await ProductModels.getAllProductsAdmin();
 
         res.render("dashboard/index", {
             title: "Dashboard",

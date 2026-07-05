@@ -256,6 +256,27 @@ button:hover, .btn:hover{
   right:14px;
   background:#dc2626;
 }
+.btn-activate{
+  right:14px;
+  background:#16a34a;
+}
+
+.btn-activate:hover{
+  background:#15803d;
+}
+
+.state-producto{
+  font-weight:700;
+  font-size:13px;
+}
+
+.state-producto.activo{
+  color:#16a34a;
+}
+
+.state-producto.inactivo{
+  color:#dc2626;
+}
 
 .btn-copy:hover{background:#1d4ed8;}
 .btn-modify:hover{background:#d97706;}

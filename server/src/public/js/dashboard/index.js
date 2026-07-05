@@ -1,40 +1,68 @@
 const agregarFuncionalidadBotones = () => {
     const botonesCopy = document.querySelectorAll('.btn-copy');
     const botonesDelete = document.querySelectorAll('.btn-delete');
-    const URL = "http://localhost:3000/api/products";
+    const botonesActivate = document.querySelectorAll('.btn-activate');
+
     botonesCopy.forEach(boton => {
         boton.addEventListener('click', async () => {
             try {
                 const ID = boton.getAttribute('data-id');
-                navigator.clipboard.writeText(ID)
-            } catch (error){
-                console.error('Error al copiar el id: ', error)
+                navigator.clipboard.writeText(ID);
+            } catch (error) {
+                console.error('Error al copiar el id: ', error);
             }
         });
-    })
+    });
+
     botonesDelete.forEach(boton => {
         boton.addEventListener('click', async () => {
             const NOMBRE = boton.getAttribute('data-name');
-            const confirmacion = confirm(`Esta seguro que desea eliminar el producto: ${NOMBRE}?\nEsto no lo borrara de la base de datos, solo le dara la baja logica.`);
-            if(confirmacion) {
+            const confirmacion = confirm(`¿Está seguro que desea desactivar el producto: ${NOMBRE}?\nEsto no lo borra de la base de datos, solo le da la baja lógica.`);
+            if (confirmacion) {
                 const ID = boton.getAttribute('data-id');
                 try {
-                    const response = await fetch(`${URL}/${ID}`, { method: "DELETE" });
-                    if (response.ok) {
-                        const tarjetaProducto = document.getElementById(`card-producto-${ID}`);
-                        if (tarjetaProducto) {
-                            tarjetaProducto.remove();
-                        }
-                    } else {
-                        errorData = await response.json();
-                        alert('No se pudo eliminar un producto');
-                        console.error(errorData.message);
-                    }                
-                } catch(error) {
+                    const response = await fetch(`/api/products/${ID}`, { method: "DELETE" });
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        alert(data.message || 'No se pudo desactivar el producto');
+                        return;
+                    }
+
+                    window.location.reload();
+
+                } catch (error) {
                     console.error('Error en la solicitud DELETE: ', error);
-                    alert('Ocurrio un error al eliminar un producto');
+                    alert('Ocurrió un error al desactivar el producto');
                 }
             }
-        })
-    })
+        });
+    });
+
+    botonesActivate.forEach(boton => {
+        boton.addEventListener('click', async () => {
+            const NOMBRE = boton.getAttribute('data-name');
+            const confirmacion = confirm(`¿Está seguro que desea activar el producto: ${NOMBRE}?`);
+            if (confirmacion) {
+                const ID = boton.getAttribute('data-id');
+                try {
+                    const response = await fetch(`/api/products/${ID}/activar`, { method: "POST" });
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        alert(data.message || 'No se pudo activar el producto');
+                        return;
+                    }
+
+                    window.location.reload();
+
+                } catch (error) {
+                    console.error('Error en la solicitud PATCH: ', error);
+                    alert('Ocurrió un error al activar el producto');
+                }
+            }
+        });
+    });
 }
+
+agregarFuncionalidadBotones();

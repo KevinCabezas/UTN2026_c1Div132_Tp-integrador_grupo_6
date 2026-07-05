@@ -18,6 +18,9 @@
                                 <p class="price-producto">$<%= producto.price %></p>
                                 <p class="stock-producto"><%= producto.stock %></p>
                                 <p class="lineId-producto"><%= producto.line_id %></p>
+                                <p class="state-producto <%= producto.state ? 'activo' : 'inactivo' %>">
+                                    <%= producto.state ? 'Activo' : 'Inactivo' %>
+                                </p>
                                 <button 
                                     class="btn-card-producto btn-copy"
                                     data-id="<%= producto.id %>"
@@ -30,13 +33,23 @@
                                     title="Modificar producto">
                                     <i data-lucide="pencil"></i>
                                 </a>
-                                <button
-                                    class="btn-card-producto btn-delete"
-                                    data-name="<%= producto.name %>"
-                                    data-id="<%= producto.id %>"
-                                    title="Eliminar producto">
-                                    <i data-lucide="trash-2"></i>
-                                </button>
+                                <% if (producto.state) { %>
+                                    <button
+                                        class="btn-card-producto btn-delete"
+                                        data-name="<%= producto.name %>"
+                                        data-id="<%= producto.id %>"
+                                        title="Desactivar producto">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                <% } else { %>
+                                    <button
+                                        class="btn-card-producto btn-activate"
+                                        data-name="<%= producto.name %>"
+                                        data-id="<%= producto.id %>"
+                                        title="Activar producto">
+                                        <i data-lucide="power"></i>
+                                    </button>
+                                <% } %>
                             </div>
                         <% }) %>
                     </div>

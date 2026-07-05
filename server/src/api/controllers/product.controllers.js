@@ -2,7 +2,14 @@ import ProductModels from "../models/product.models.js";
 
 export const getAllProducts = async (req, res) => {
     try {
-        const [rows, fields] = await ProductModels.getAllProducts();
+        // Si el cliente no manda page/limit en la URL, usamos valores por defecto
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 8;
+        const offset = (page - 1) * limit;
+
+        const [rows] = await ProductModels.getAllProducts(limit, offset);
+        const [countResult] = await ProductModels.countActiveProducts();
+        const total = countResult[0].total;
 
         if (rows.length === 0) {
             return res.status(404).json({
@@ -12,14 +19,15 @@ export const getAllProducts = async (req, res) => {
 
         res.status(200).json({
             payload: rows,
-            total: rows.length
+            total,
+            currentPage: page,
+            totalPages: Math.ceil(total / limit)
         });
 
     } catch (error) {
-        console.log("Error obteniendo los productos: ", error);
-
+        console.log(error);
         res.status(500).json({
-            message: "Error interno al obtener productos"
+            message: "Error interno del servidor"
         });
     }
 }
@@ -142,6 +150,29 @@ export const removeProduct = async (req, res) => {
     } catch (error) {
         console.log(`Error en peticion DELETE`, error);
 
+        res.status(500).json({
+            message: "Error interno del servidor"
+        });
+    }
+}
+
+export const activateProduct = async (req, res) => {
+    const id = req.id;
+    try {
+        const [result] = await ProductModels.activateProduct(id);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: `No se encontró producto con id ${id}`
+            });
+        }
+
+        res.status(200).json({
+            message: `Producto con id ${id} activado exitosamente`
+        });
+
+    } catch (error) {
+        console.log(`Error activando producto`, error);
         res.status(500).json({
             message: "Error interno del servidor"
         });

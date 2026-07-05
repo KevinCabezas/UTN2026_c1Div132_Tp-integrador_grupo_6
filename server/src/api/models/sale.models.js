@@ -36,10 +36,28 @@ const insertSurvey = (name, email, products, coment, rating, image_url) => {
     `;
   return connection.query(sql, [name, email,  JSON.stringify(products), coment, rating, image_url]);
 }
-
+const getAllSalesWithProducts = () => {
+    const sql = `
+        SELECT
+            s.id AS sale_id,
+            s.customer_name,
+            s.total_price,
+            s.created_at,
+            p.id AS product_id,
+            p.name AS product_name,
+            ps.quantity,
+            ps.price_unit
+        FROM sales s
+        LEFT JOIN product_sale ps ON ps.sale_id = s.id
+        LEFT JOIN products p ON p.id = ps.product_id
+        ORDER BY s.id DESC
+    `;
+    return connection.query(sql);
+}
 export default {
   insertNewSale,
   insertNewSaleDetail,
   updateTotalPriceSale,
   insertSurvey,
+  getAllSalesWithProducts
 }
