@@ -3,6 +3,13 @@
 const loginForm = document.getElementById("login-form");
 const errorLogin = document.getElementById("error-login");
  
+const btnQuickAccess = document.getElementById("btn-quick-access");
+
+btnQuickAccess.addEventListener("click", () => {
+    document.getElementById("email").value = "admin@test.com";
+    document.getElementById("password").value = "admin1234";
+});
+
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
  

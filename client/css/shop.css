@@ -219,3 +219,25 @@
       background: white;
       transition-duration: 300ms;
     }
+    
+    .container-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.container-paginacion button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: var(--secondary-color);
+  color: white;
+  cursor: pointer;
+}
+
+.container-paginacion button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

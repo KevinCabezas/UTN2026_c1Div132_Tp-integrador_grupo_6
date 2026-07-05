@@ -44,6 +44,12 @@
       <div id="lista-productos" class="container-products"></div>
     </section>
 
+    <div id="paginacion" class="container-paginacion">
+      <button id="btn-anterior">Anterior</button>
+      <span id="info-pagina"></span>
+      <button id="btn-siguiente">Siguiente</button>
+    </div>
+
     <script type="module">
       import { getListProducts, getListProductsForLines } from "./js/api.js";
 
@@ -128,14 +134,25 @@
         card.querySelector(".cantidad").textContent = 1;
       }
 
+      //=================== PAGINACION ===================//
+
+      const LIMIT = 8; // productos por página
+      let paginaActual = 1;
+
+      const infoPagina = document.getElementById("info-pagina");
+      const btnAnterior = document.getElementById("btn-anterior");
+      const btnSiguiente = document.getElementById("btn-siguiente");
+
       //=================== RENDER ===================//
 
-      async function renderProducts() {
+      async function renderProducts(pagina = 1) {
         try {
 
-          const response = await getListProducts();
+          const response = await getListProducts(pagina, LIMIT);
 
           const products = response.payload;
+
+          paginaActual = response.currentPage;
 
           listProducts.innerHTML = "";
 
@@ -152,7 +169,7 @@
 
             <div class="card-img">
               <img
-                src="http://localhost:3000${product.image_url}"
+                src="http://localhost:3006${product.image_url}"
                 alt="${product.image_url}"
               >
             </div>
@@ -205,6 +222,14 @@
             btn.addEventListener("click", agregarAlCarrito);
           });
 
+          // Actualizamos el texto "Página X de Y"
+          infoPagina.textContent = `Página ${response.currentPage} de ${response.totalPages}`;
+
+          // Deshabilitamos "Anterior" si ya estamos en la primera página,
+          // y "Siguiente" si ya estamos en la última
+          btnAnterior.disabled = response.currentPage <= 1;
+          btnSiguiente.disabled = response.currentPage >= response.totalPages;
+
         } catch (error) {
           console.error(error);
         }
@@ -220,7 +245,17 @@
 
       });
 
-      renderProducts();
+      btnAnterior.addEventListener("click", () => {
+        if (paginaActual > 1) {
+          renderProducts(paginaActual - 1);
+        }
+      });
+
+      btnSiguiente.addEventListener("click", () => {
+        renderProducts(paginaActual + 1);
+      });
+
+      renderProducts(1);
     </script>
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
   </main>

@@ -1,6 +1,6 @@
 import connection from "../db/db.js";
 
-const getAllProducts = () => {
+const getAllProducts = (limit, offset) => {
     const sql = `
         SELECT
             p.id,
@@ -12,9 +12,10 @@ const getAllProducts = () => {
             l.name AS line_name
         FROM products p
         INNER JOIN product_lines l ON p.line_id = l.id
-        WHERE p.state = 1 
+        WHERE p.state = 1
+        LIMIT ? OFFSET ?
     `;
-    return connection.query(sql);
+    return connection.query(sql, [limit, offset]);
 }
 
 const getAllProductsForLine = (lineId) => {
@@ -61,6 +62,16 @@ const getProductStock = (id) => {
     return connection.query(sql, [id]);
 }
 
+const getAllLines = () => {
+    const sql = `
+        SELECT
+            id,
+            name
+        FROM product_lines
+    `;
+    return connection.query(sql);
+}
+
 const createProduct = (name, brand, price, stock, line_id, image_url) => {
     const sql = `
         INSERT INTO products (name, brand, price, stock, line_id, image_url)
@@ -87,23 +98,48 @@ const deleteProduct = (id) => {
     return connection.query(sql, [id]);
 }
 
-const getAllLines = () => {
+const getAllProductsAdmin = () => {
     const sql = `
         SELECT
-            id,
-            name
-        FROM product_lines
+            p.id,
+            p.name,
+            p.brand,
+            p.price,
+            p.stock,
+            p.state,
+            p.image_url,
+            p.line_id,
+            l.name AS line_name
+        FROM products p
+        INNER JOIN product_lines l ON p.line_id = l.id
     `;
+    return connection.query(sql);
+}
+
+const activateProduct = (id) => {
+    const sql = `
+        UPDATE products
+        SET state = TRUE
+        WHERE id = ?
+    `;
+    return connection.query(sql, [id]);
+}
+
+const countActiveProducts = () => {
+    const sql = `SELECT COUNT(*) AS total FROM products WHERE state = 1`;
     return connection.query(sql);
 }
 
 export default {
     getAllProducts,
+    getAllProductsAdmin,
     getProductById,
     getProductStock,
     getAllLines,
     createProduct,
     updateProduct,
     deleteProduct,
+    activateProduct,
+    countActiveProducts,
     getAllProductsForLine
 }
