@@ -77,43 +77,45 @@ export const consultProductView = (req, res) => {
     }
 
 }
-export const createProductView = (req, res) => {
-    res.render("dashboard/post", {
-        title: "Crear",
-        about: "Crear producto"
-    });
+
+export const createProductView = async (req, res) => {
+    try {
+        const [lineRows] = await ProductModels.getAllLines();
+
+        res.render("dashboard/post", {
+            title: "Crear",
+            about: "Crear producto",
+            lineas: lineRows
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error interno del servidor"
+        });
+    }
 }
 
 export const updateProductView = async (req, res) => {
     try {
         const { id } = req.query;
+        const [productRows] = await ProductModels.getProductById(id);
 
-        // Si todavia no eligio producto, mostramos el formulario para ingresar ID
-        if (!id) {
-            return res.render("dashboard/modify-search", {
-                title: "Modificar producto",
-                about: "Buscar producto a modificar"
-            });
+        if (productRows.length === 0) {
+            return res.status(404).send('No se encontró el producto');
         }
+        const [lineRows] = await ProductModels.getAllLines();
 
-        // Buscamos el producto por id
-        const [rows] = await ProductModels.getProductById(id);
-
-        if (rows.length === 0) {
-            return res.status(404).send("No se encontró el producto");
-        }
-
-        // Renderizamos la vista de edición con el producto cargado
-        res.render("dashboard/put", {
-            title: "Modificar producto",
-            about: "Editar producto",
-            producto: rows[0]
+        res.render('dashboard/put', {
+            title: 'Modificar producto',
+            about: 'Editar producto',
+            producto: productRows[0],
+            lineas: lineRows
         });
 
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: "Error interno del servidor"
+            message: 'Error interno del servidor'
         });
     }
 };

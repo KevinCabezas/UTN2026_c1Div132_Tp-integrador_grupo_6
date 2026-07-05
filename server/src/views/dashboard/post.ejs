@@ -35,8 +35,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="line_id">ID de Linea del Producto:</label>
-                    <input type="number" name="line_id" id="line_id" required>
+                    <label for="line_id">Línea del Producto:</label>
+                    <select name="line_id" id="line_id" required>
+                        <option value="" class="line-option">Seleccionar línea</option>
+                        <% lineas.forEach(linea => { %>
+                            <option value="<%= linea.id %>"><%= linea.name %></option>
+                        <% }) %>
+                    </select>
                 </div>
 
                 <div class="form-group">

@@ -70,10 +70,21 @@ const deleteProduct = (id) => {
     return connection.query(sql, [id]);
 }
 
+const getAllLines = () => {
+    const sql = `
+        SELECT
+            id,
+            name
+        FROM product_lines
+    `;
+    return connection.query(sql);
+}
+
 export default {
     getAllProducts,
     getProductById,
     getProductStock,
+    getAllLines,
     createProduct,
     updateProduct,
     deleteProduct
