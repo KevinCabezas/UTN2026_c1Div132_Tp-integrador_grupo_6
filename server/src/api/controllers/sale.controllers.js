@@ -10,7 +10,7 @@ export const createSale = async (req, res) => {
     const [rows] = await saleModels.insertNewSale(customer_name);
     // console.log(rows.insertId)
     const sale_id = rows.insertId;
-      console.log(products);
+    console.log(products);
 
     // produccts es un lista de objetos 
     for (const p of products) {
@@ -19,7 +19,7 @@ export const createSale = async (req, res) => {
       await saleModels.updateTotalPriceSale(sale_id, p.product_id, p.quantity);
       console.log(p);
     }
-    
+
     // console.log(products)
     res.status(201).json({
       message: "Venta creada con exito",
@@ -35,6 +35,28 @@ export const createSale = async (req, res) => {
   }
 }
 
+
+export const createSurvey = async (req, res) => {
+  const { name, email, products, coment, rating } = req.body;
+  try {
+    const image_url = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const [rows] = await saleModels.insertSurvey(name, email, products, coment, rating, image_url);
+
+    res.status(201).json({
+      message: "Producto creado con exito",
+      productId: rows.insertId,
+      image_url
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      message: "Error interno del servidor"
+    });
+  }
+}
 // export const createSaleDetail = async (req, res) => {
 
 //   try {

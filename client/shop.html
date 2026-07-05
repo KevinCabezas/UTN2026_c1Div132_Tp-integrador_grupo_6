@@ -11,7 +11,7 @@
 
 <body>
 
-  <head>
+  <header>
     <nav class="container-nav">
       <a href="">sdfsd</a>
       <div class="buttons-nav">
@@ -24,7 +24,7 @@
         </a>
       </div>
     </nav>
-  </head>
+  </header>
   <main >
     <h1>Productos</h1>
     <div id="lista-productos" class="container-products"></div>
@@ -76,6 +76,7 @@
         const marca = card.dataset.brand;
         const precio = Number(card.dataset.price);
 
+        console.log(card.dataset.name)
         const cantidad = Number(
           card.querySelector(".cantidad").textContent
         );
@@ -123,15 +124,15 @@
           <div
             class="card-product"
             data-id="${product.id}"
-            data-name="${product.name}"
+            data-name="${product.name.replace(/"/g, '&quot;')}"
             data-brand="${product.brand}"
             data-price="${product.price}"
           >
 
             <div class="card-img">
               <img
-                src="./assets/img-prueva.webp"
-                alt="${product.name}"
+                src="http://localhost:3000${product.image_url}"
+                alt="${product.image_url}"
               >
             </div>
 

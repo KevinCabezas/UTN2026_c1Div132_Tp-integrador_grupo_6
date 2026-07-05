@@ -28,8 +28,18 @@ const updateTotalPriceSale = (sale_id, product_id, quantity) => {
   return connection.query(sql, [quantity, product_id, sale_id]);
 };
 
+
+const insertSurvey = (name, email, products, coment, rating, image_url) => {
+  const sql = `
+        INSERT INTO surveys (name, email, products, coment, rating, image_url)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+  return connection.query(sql, [name, email,  JSON.stringify(products), coment, rating, image_url]);
+}
+
 export default {
   insertNewSale,
   insertNewSaleDetail,
   updateTotalPriceSale,
+  insertSurvey,
 }

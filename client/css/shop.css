@@ -34,6 +34,7 @@
     main {
       width: 100%;
     }
+
     .container-nav {
       background-color: var(--primary-color);
       height: 60px;
@@ -65,7 +66,7 @@
       width: 260px;
       background: #fff;
       border-radius: 12px;
-     
+
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
@@ -85,14 +86,13 @@
 
 
     .card-img img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .card-footer {
-      
+
       padding: 15px;
       gap: 8px;
       display: flex;
@@ -140,15 +140,24 @@
       padding: 0 7px;
     }
 
+    .btn-quantity button:hover {
+      background: var(--primary-color);
+    }
+
+    .btn-add:hover {
+      background: var(--primary-color);
+    }
+
     a {
       text-decoration: none;
     }
-.buttons-nav a {
-  color: white;
-  background: var(--secondary-color);
-  display: flex;
-  gap: 12px;
-  font-size: 20px;
-  padding: 8px 16px;
-  border-radius: 30px;
-}
+
+    .buttons-nav a {
+      color: white;
+      background: var(--secondary-color);
+      display: flex;
+      gap: 12px;
+      font-size: 20px;
+      padding: 8px 16px;
+      border-radius: 30px;
+    }

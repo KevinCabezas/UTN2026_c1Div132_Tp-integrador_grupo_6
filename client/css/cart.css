@@ -108,3 +108,29 @@ button {
 
 }
 
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 300px;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}

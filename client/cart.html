@@ -8,7 +8,7 @@
   <title>Carrito</title>
   <link rel="stylesheet" href="./css/cart.css">
   <style>
-   
+
   </style>
 
 </head>
@@ -20,22 +20,19 @@
     <h1>Ticket de Compra</h1>
 
     <table>
-
       <thead>
-
+        <!-- Encabezado del ticket de compra -->
         <tr>
-
           <th>Producto</th>
           <th>Cant.</th>
           <th>Unit.</th>
           <th>Sub total</th>
-
+          <th>Acciones</th>
         </tr>
-
       </thead>
-
-      <tbody id="detalle"></tbody>
-
+      <!-- Aca se renderizara los detalles de los productos del carrito guardo 
+       en el localStorage y listo para hacer la compa -->
+      <tbody id="product-detail"></tbody>
     </table>
 
     <div class="total">
@@ -54,97 +51,171 @@
 
   </div>
 
+  <!-- Modal  -->
+  <div id="modal-confirm" class="modal">
+    <div class="modal-content">
+      <p>¿Desea comfirmar la compra?</p>
+
+      <div class="buttons">
+        <button id="confirm">Comfirmar</button>
+        <button id="cancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-exit" class="modal">
+    <div id="modal-content">
+      <button id="btn-exit">Salir</button>
+    </div>
+  </div>
   <script type="module">
 
     import { createSale } from "./js/api.js";
 
-    const detalle = document.getElementById("detalle");
+    const modalConfirm = document.getElementById("modal-confirm");
+    const btnConfirm = document.getElementById("confirm");
+    const btnCancel = document.getElementById("cancel");
 
+    const modalExit = document.getElementById("modal-exit");
+    const btnExit = document.getElementById("btn-exit");
+
+    const productDetail = document.getElementById("product-detail");
     const totalCompra = document.getElementById("totalCompra");
-
     const btnComprar = document.getElementById("btnComprar");
-
     const btnImprimir = document.getElementById("btnImprimir");
-
     const mensaje = document.getElementById("mensaje");
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-    let total = 0;
+    // funcion para renderizar los datos del carrito en el ticked
+    function renderCarrito() {
+      productDetail.innerHTML = "";
+      let total = 0;
 
-    carrito.forEach(product => {
 
-      const subtotal = product.precio * product.cantidad;
+      carrito.forEach((product, index) => {
+        const subtotal = product.precio * product.cantidad;
 
-      total += subtotal;
+        total += subtotal;
+        productDetail.innerHTML += `
+        <tr>
+          <td>${product.nombre}</td>
+          <td>${product.cantidad}</td>
+          <td>$${product.precio}</td>
+          <td>$${subtotal}</td>
+           <td>
+          <button class="btn-eliminar" data-index="${index}">
+            Eliminar
+          </button>
+        </td>
+        </tr>
+        `;
 
-      detalle.innerHTML += `
+      });
 
-      <tr>
+      totalCompra.textContent = total.toFixed(2);
+    }
 
-        <td>${product.nombre}</td>
 
-        <td>${product.cantidad}</td>
-
-        <td>$${product.precio}</td>
-
-        <td>$${subtotal}</td>
-
-      </tr>
-
-  `;
-
-    });
-
-    totalCompra.textContent = total.toFixed(2);
-
-    btnComprar.addEventListener("click", async () => {
+    // funcion que mapea los datos del carrito y los pasa a un objeto(sale)
+    // despues se lo pasmos al funcion create sale y esa funcion lo envia la back 
+    async function sendDataSale() {
 
       const sale = {
-
         customer_name: localStorage.getItem("nombre"),
-
         products: carrito.map(p => ({
-
           product_id: p.id,
-
           quantity: p.cantidad
-
         }))
 
       };
 
       try {
-
         await createSale(sale);
-
         localStorage.removeItem("carrito");
 
-        mensaje.textContent = "Compra realizada correctamente.";
-
+        mensaje.textContent = "Compra realizada con exito";
         mensaje.className = "success";
-
         btnComprar.style.display = "none";
-
         btnImprimir.style.display = "block";
 
       } catch (error) {
 
-        mensaje.textContent = "No se pudo realizar la compra.";
-
+        mensaje.textContent = "No se pudo realizar la compra";
         mensaje.className = "error";
+      }
+    }
 
+    // button del ticket para confirmar la venta
+    btnComprar.addEventListener("click", async () => {
+      // console.log(carrito.length)
+      // preguntamos si hay productos en el carrito para mostrar o no el modalConfirm de confirmar o cancelar la compra
+      if (carrito.length > 0) {
+        modalConfirm.classList.add("active");
+
+      } else {
+        modalConfirm.classList.remove("active");
+        mensaje.textContent = "Sin productos en el carrito";
+        mensaje.className = "error";
+      }
+    });
+
+
+    btnImprimir.addEventListener("click", () => {
+
+      modalExit.classList.add("active");
+      // window.print();
+
+    });
+
+    // button modal salir que nos redirige a la pagina de encuestas
+    btnExit.addEventListener("click", () => {
+      modalExit.classList.remove("active");
+      window.location.href = "survey.html";
+
+    });
+
+    let indexEliminar = null;
+
+    productDetail.addEventListener("click", (e) => {
+
+      if (e.target.classList.contains("btn-eliminar")) {
+        indexEliminar = Number(e.target.dataset.index);
+        carrito.splice(indexEliminar, 1);
+        console.log(carrito)
+
+        // actualizamos el carrito en el localStorage ya qwue se elimino un producto
+        // lo volvemos a renderizar con los nuevos datos
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        renderCarrito();
       }
 
     });
 
-    btnImprimir.addEventListener("click", () => {
+    // Button del modalConfirm para cancelar la compra
+    btnCancel.addEventListener("click", () => {
 
-      window.print();
+      modalConfirm.classList.remove("active");
+
 
     });
 
+    // Button del modalConfirm para confirmar la compra y se envien la data al back
+    btnConfirm.addEventListener("click", () => {
+      // if (carrito.length())
+      // console.log(carrito)
+      sendDataSale()
+      // carrito.splice(indexEliminar, 1);
+
+      modalConfirm.classList.add("active");
+      modalConfirm.classList.remove("active");
+
+    });
+
+    renderCarrito();
+
   </script>
+
 
 </body>
 

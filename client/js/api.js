@@ -4,15 +4,12 @@ export async function getListProducts() {
 
   try {
     const response = await fetch(`${API_URL}/products`);
-
     if (!response.ok) {
       throw new Error("Error HTTP: ", response.status);
     }
-
     const data = await response.json();
 
     return data;
-  
 
   } catch (error) {
     console.error("Error al obtener los datos:", error)
@@ -39,6 +36,26 @@ export async function createSale(sale) {
 
   } catch (error) {
     console.error("Error al crear la venta:", error);
+    throw error;
+  }
+}
+
+export async function createSurvey(formData) {
+  try {
+    const response = await fetch(`${API_URL}/sales/survey`, {
+      method: "POST",
+      body: formData
+    });
+
+    console.log(formData)
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error("Error al crear la encuesta:", error);
     throw error;
   }
 }

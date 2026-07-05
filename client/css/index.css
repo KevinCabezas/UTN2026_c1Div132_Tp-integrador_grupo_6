@@ -72,3 +72,23 @@
     button:hover {
       background: var(--primary-color);
     }
+
+    .btn-redirect-login {
+      text-decoration: none;
+      top: 0;
+      left: 0;
+      position: fixed;
+      margin: 20px;
+    }
+
+    .btn-redirect-login a {
+      text-decoration: none;
+      background-color: var(--secondary-color);
+      padding: 8px 16px;
+      border-radius: 30px;
+      color: white;
+      display: flex;
+      gap: 8px;
+      font-size: 14px;
+      align-items: center;
+    }
