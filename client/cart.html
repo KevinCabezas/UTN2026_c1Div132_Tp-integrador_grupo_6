@@ -103,6 +103,7 @@
     const btnImprimir = document.getElementById("btnImprimir");
     const mensaje = document.getElementById("mensaje");
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const nombreCliente = localStorage.getItem("nombre") || "Cliente";
 
     function imprimirTicket() {
       const { jsPDF } = window.jspdf;
@@ -110,7 +111,7 @@
 
       let y = 20;
 
-      const nombreCliente = localStorage.getItem("nombre") || "Cliente";
+      
       const fecha = new Date().toLocaleString();
 
       // Encabezado
