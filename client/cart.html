@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/logo.png" type="image/x-icon">
 
   <title>Carrito</title>
   <link rel="stylesheet" href="./css/cart.css">
@@ -14,60 +15,77 @@
 </head>
 
 <body>
+  <header>
+    <nav class="container-nav">
+      <a href="">
+        <img src="./assets/logo.png" alt="Mundo tech">
+        <span class="world">MUNDO</span>
+        <span class="tech">TECH</span>
+      </a>
+      <div class="btn-nav">
+        <a href="shop.html">
+          Ver productos
+        </a>
+      </div>
+    </nav>
+  </header>
+  <main>
 
-  <div class="ticket">
+    <div class="ticket">
 
-    <h1>Ticket de Compra</h1>
+      <h1>Ticket de Compra</h1>
 
-    <table>
-      <thead>
-        <!-- Encabezado del ticket de compra -->
-        <tr>
-          <th>Producto</th>
-          <th>Cant.</th>
-          <th>Unit.</th>
-          <th>Sub total</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <!-- Aca se renderizara los detalles de los productos del carrito guardo 
+      <table>
+        <thead>
+          <!-- Encabezado del ticket de compra -->
+          <tr>
+            <th>Producto</th>
+            <th>Cant.</th>
+            <th>Unit.</th>
+            <th>Sub total</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <!-- Aca se renderizara los detalles de los productos del carrito guardo 
        en el localStorage y listo para hacer la compa -->
-      <tbody id="product-detail"></tbody>
-    </table>
+        <tbody id="product-detail"></tbody>
+      </table>
 
-    <div class="total">
-      Total: $<span id="totalCompra">0</span>
+      <div class="total">
+        Total: $<span id="totalCompra">0</span>
+      </div>
+
+      <button id="btnComprar">
+        Finalizar compra
+      </button>
+
+      <button id="btnImprimir">
+        Imprimir Ticket
+      </button>
+
+      <p id="mensaje"></p>
+
     </div>
 
-    <button id="btnComprar">
-      Finalizar compra
-    </button>
+    <!-- Modal  -->
+    <div id="modal-confirm" class="modal">
+      <div class="modal-content">
+        <p>¿Desea comfirmar la compra?</p>
 
-    <button id="btnImprimir">
-      Imprimir Ticket
-    </button>
-
-    <p id="mensaje"></p>
-
-  </div>
-
-  <!-- Modal  -->
-  <div id="modal-confirm" class="modal">
-    <div class="modal-content">
-      <p>¿Desea comfirmar la compra?</p>
-
-      <div class="buttons">
-        <button id="confirm">Comfirmar</button>
-        <button id="cancel">Cancelar</button>
+        <div class="buttons">
+          <button id="confirm">Comfirmar</button>
+          <button id="cancel">Cancelar</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="modal-exit" class="modal">
-    <div id="modal-content">
-      <button id="btn-exit">Salir</button>
+    <div id="modal-exit" class="modal">
+      <div id="modal-content">
+        <button id="btn-exit">Salir</button>
+      </div>
     </div>
-  </div>
+  </main>
+
   <script type="module">
 
     import { createSale } from "./js/api.js";
@@ -157,6 +175,8 @@
       const fechaArchivo = new Date().toISOString().replace(/[:.]/g, "-");
       doc.save(`ticket-${nombreCliente}-${fechaArchivo}.pdf`);
     }
+
+    
     // -----------------------------------------------------------------------------------------------
     // funcion para renderizar los datos del carrito en el ticked
     function renderCarrito() {
@@ -204,6 +224,7 @@
       try {
         await createSale(sale);
         localStorage.removeItem("carrito");
+        localStorage.removeItem("nombre");
 
         mensaje.textContent = "Compra realizada con exito";
         mensaje.className = "success";
@@ -235,8 +256,13 @@
     btnImprimir.addEventListener("click", () => {
 
       // modalExit.classList.add("active");
-      // window.print();
-      imprimirTicket()
+      imprimirTicket();
+      mensaje.textContent = "Ticket impreso";
+      renderCarrito();
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 3000);
+
     });
 
     // button modal salir que nos redirige a la pagina de encuestas

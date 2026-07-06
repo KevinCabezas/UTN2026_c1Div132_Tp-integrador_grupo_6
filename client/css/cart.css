@@ -14,6 +14,10 @@
   --color-b: #e5e7eb;
 }
 
+a {
+  text-decoration: none;
+}
+
 body {
   background: #f5f5f5;
   display: flex;
@@ -21,6 +25,62 @@ body {
   padding: 40px;
 }
 
+.container-nav {
+  background-color: var(--primary-color);
+  height: 70px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  padding: 0 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container-nav a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: x-large;
+}
+
+.container-nav img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.world {
+  font-weight: bold;
+  color: white;
+}
+
+.tech {
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.btn-nav a {
+  color: white;
+  background: var(--secondary-color);
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 30px;
+}
+
+.btn-nav a:hover {
+  color: var(--secondary-color);
+  background: white;
+  transition-duration: 300ms;
+}
+main {
+  padding-top: 70px;
+}
 .ticket {
 
   width: 500px;
@@ -133,7 +193,7 @@ button {
 }
 
 .modal-content {
-  background: #fff;
+  background: white;
   padding: 20px;
   border-radius: 8px;
   min-width: 300px;
@@ -144,6 +204,27 @@ button {
   display: flex;
   justify-content: end;
   gap: 10px;
+}
+
+.buttons #confirm{
+  background: var(--secondary-color);
+  color: white;
+}
+.buttons #confirm:hover{
+  background: rgb(43, 130, 71);
+  color: white;
+  transition-duration: 300ms;
+}
+
+.buttons #cancel{
+  background: var(--primary-color);
+  color: white;
+}
+
+.buttons #cancel:hover{
+  background: rgb(125, 129, 138);
+  color: white;
+  transition-duration: 300ms;
 }
 
 .td-eliminar {
@@ -159,6 +240,7 @@ button {
   align-items: center;
   font-size: small;
 }
+
 .btn-eliminar:hover {
   background-color: #dea165;
   transition-duration: 300ms;
