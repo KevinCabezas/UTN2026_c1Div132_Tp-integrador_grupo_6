@@ -5,10 +5,12 @@ export const getAllProducts = async (req, res) => {
         // Si el cliente no manda page/limit en la URL, usamos valores por defecto
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 8;
+        const line = req.query.line || null;
+
         const offset = (page - 1) * limit;
 
-        const [rows] = await ProductModels.getAllProducts(limit, offset);
-        const [countResult] = await ProductModels.countActiveProducts();
+        const [rows] = await ProductModels.getAllProducts(limit, offset,line);
+        const [countResult] = await ProductModels.countActiveProducts(line);
         const total = countResult[0].total;
 
         if (rows.length === 0) {

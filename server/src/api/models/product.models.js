@@ -1,7 +1,7 @@
 import connection from "../db/db.js";
 
-const getAllProducts = (limit, offset) => {
-    const sql = `
+const getAllProducts = (limit, offset, line = null) => {
+    let sql = `
         SELECT
             p.id,
             p.name,
@@ -13,9 +13,19 @@ const getAllProducts = (limit, offset) => {
         FROM products p
         INNER JOIN product_lines l ON p.line_id = l.id
         WHERE p.state = 1
-        LIMIT ? OFFSET ?
     `;
-    return connection.query(sql, [limit, offset]);
+    const params = [];
+
+    if (line) {
+        sql += ` AND p.line_id = ?`;
+        params.push(line);
+    }
+
+    sql += ` LIMIT ? OFFSET ?`;
+
+    params.push(limit, offset);
+
+    return connection.query(sql, params);
 }
 
 const getAllProductsForLine = (lineId) => {
@@ -125,9 +135,16 @@ const activateProduct = (id) => {
     return connection.query(sql, [id]);
 }
 
-const countActiveProducts = () => {
-    const sql = `SELECT COUNT(*) AS total FROM products WHERE state = 1`;
-    return connection.query(sql);
+const countActiveProducts = (line) => {
+    let sql = `SELECT COUNT(*) AS total FROM products WHERE state = 1`;
+    const params = [];
+
+    if (line) {
+        sql += ` AND line_id = ?`;
+        params.push(line);
+    }
+
+    return connection.query(sql, params);
 }
 
 export default {
