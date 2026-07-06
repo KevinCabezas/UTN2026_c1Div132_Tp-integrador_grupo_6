@@ -169,12 +169,12 @@
 
         total += subtotal;
         productDetail.innerHTML += `
-        <tr>
+        <tr  class="tr-details">
           <td>${product.nombre}</td>
           <td>${product.cantidad}</td>
           <td>$${product.precio}</td>
           <td>$${subtotal}</td>
-           <td>
+           <td class="td-eliminar">
           <button class="btn-eliminar" data-index="${index}">
             Eliminar
           </button>
