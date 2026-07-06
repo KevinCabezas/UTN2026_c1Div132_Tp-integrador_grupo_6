@@ -57,6 +57,29 @@ export const getProductById = async (req, res) => {
     }
 }
 
+export const getProductByIdAdmin = async (req, res) => {
+    const id = req.id;
+    try {
+        const [rows] = await ProductModels.getProductByIdAdmin(id);
+
+        if (rows.length === 0) {
+            return res.status(404).json({
+                message: `No se encontró producto con id ${id}`
+            });
+        }
+        res.status(200).json({
+            payload: rows
+        });
+
+    } catch (error) {
+        console.log(`Error obteniendo producto con id ${id}`, error.message);
+
+        res.status(500).json({
+            message: `Error interno al obtener un producto con id ${id}`
+        });
+    }
+}
+
 export const getProductStockById = async (req, res) => {
     const id = req.id;
     try {

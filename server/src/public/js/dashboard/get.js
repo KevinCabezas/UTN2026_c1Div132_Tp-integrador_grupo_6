@@ -2,6 +2,7 @@
 
 const getByIdForm = document.getElementById("getById-form");
 const contenedorProductos = document.getElementById("contenedor-productos");
+const message = document.querySelector('.message-input-form');
 
 getByIdForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -9,14 +10,15 @@ getByIdForm.addEventListener("submit", async (event) => {
     const id = document.getElementById("id").value;
 
     try {
-        const response = await fetch(`/api/products/${id}`);
+        const response = await fetch(`/api/products/admin/${id}`);
         const data = await response.json();
 
         if (!response.ok) {
-            contenedorProductos.innerHTML = `<p class="error-busqueda">${data.message || "No se encontró el producto"}</p>`;
+            message.innerText = "El id ingresado no corresponde a ningun producto";
+            message.className = 'message-error';
             return;
         }
-
+        message.innerText = ''
         const producto = data.payload[0];
 
         contenedorProductos.innerHTML = `
@@ -27,14 +29,14 @@ getByIdForm.addEventListener("submit", async (event) => {
                 <p class="price-producto">$${producto.price}</p>
                 <p class="stock-producto">${producto.stock}</p>
                 <p class="lineId-producto">${producto.line_name}</p>
-                <a href="/dashboard/modificar?id=${producto.id}" class="btn-card-producto btn-modify" title="Modificar producto">
-                    <i data-lucide="pencil"></i>
-                </a>
+                <p class="state-producto ${producto.state ? 'activo' : 'inactivo'}">
+                    ${producto.state ? 'Activo' : 'Inactivo'}
+                </p>
             </div>
         `;
-
     } catch (error) {
         console.error(error);
-        contenedorProductos.innerHTML = `<p class="error-busqueda">Ocurrió un error al buscar el producto</p>`;
+        message.innerText = `Ocurrió un error al buscar el producto`;
+        message.className = 'message-error';
     }
 });

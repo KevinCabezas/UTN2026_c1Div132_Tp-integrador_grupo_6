@@ -105,7 +105,7 @@ export const updateProductView = async (req, res) => {
                 error: null
             });
         }
-        const [productRows] = await ProductModels.getProductById(id);
+        const [productRows] = await ProductModels.getProductByIdAdmin(id);
         if (productRows.length === 0) {
             return res.render("dashboard/modify-search", {
                 title: "Modificar producto",

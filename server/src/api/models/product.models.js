@@ -122,8 +122,28 @@ const getAllProductsAdmin = () => {
             l.name AS line_name
         FROM products p
         INNER JOIN product_lines l ON p.line_id = l.id
+        ORDER BY p.state DESC, p.id ASC
     `;
     return connection.query(sql);
+}
+
+const getProductByIdAdmin = (id) => {
+    const sql = `
+        SELECT
+            p.id,
+            p.name,
+            p.brand,
+            p.price,
+            p.stock,
+            p.state,
+            p.image_url,
+            p.line_id,
+            l.name AS line_name
+        FROM products p
+        INNER JOIN product_lines l ON p.line_id = l.id
+        WHERE p.id = ?
+    `;
+    return connection.query(sql, [id]);
 }
 
 const activateProduct = (id) => {
@@ -151,6 +171,7 @@ export default {
     getAllProducts,
     getAllProductsAdmin,
     getProductById,
+    getProductByIdAdmin,
     getProductStock,
     getAllLines,
     createProduct,
