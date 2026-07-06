@@ -1,9 +1,15 @@
-const API_URL = "http://localhost:3006/api";
+const API_URL = "http://localhost:3000/api";
 
-export async function getListProducts(page = 1, limit = 8) {
+export async function getListProducts(page = 1, limit = 8, line = null) {
 
   try {
-    const response = await fetch(`${API_URL}/products?page=${page}&limit=${limit}`);
+    let url = `${API_URL}/products?page=${page}&limit=${limit}`;
+
+    if (line !== null) {
+      url += `&line=${line}`;
+    }
+    const response = await fetch(url);
+
     if (!response.ok) {
       throw new Error("Error HTTP: ", response.status);
     }

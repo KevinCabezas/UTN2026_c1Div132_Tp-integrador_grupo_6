@@ -86,7 +86,78 @@
     const mensaje = document.getElementById("mensaje");
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
+    function imprimirTicket() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
 
+      let y = 20;
+
+      const nombreCliente = localStorage.getItem("nombre") || "Cliente";
+      const fecha = new Date().toLocaleString();
+
+      // Encabezado
+      doc.setFontSize(18);
+      doc.text("MUNDO TECH", 20, y);
+
+      y += 8;
+
+      doc.setFontSize(10);
+      doc.text("Ticket de compra", 20, y);
+
+      y += 10;
+
+      doc.line(20, y, 190, y);
+      y += 10;
+
+      // datos cliente
+      doc.setFontSize(11);
+      doc.text(`Nombre: ${nombreCliente}`, 20, y);
+      y += 6;
+      doc.text(`Fecha: ${fecha}`, 20, y);
+
+      y += 10;
+
+      // ENCABEZADO TABLA
+      doc.setFontSize(11);
+      doc.text("Producto", 20, y);
+      doc.text("Cant.", 90, y);
+      doc.text("Unit.", 120, y);
+      doc.text("Subtotal", 150, y);
+
+      y += 5;
+      doc.line(20, y, 190, y);
+
+      y += 8;
+
+      let total = 0;
+
+      // productos
+      carrito.forEach((product) => {
+        const subtotal = product.precio * product.cantidad;
+        total += subtotal;
+
+        doc.text(String(product.nombre), 20, y);
+        doc.text(String(product.cantidad), 90, y);
+        doc.text(`$${product.precio}`, 120, y);
+        doc.text(`$${subtotal}`, 150, y);
+
+        y += 8;
+      });
+
+      y += 5;
+
+      doc.line(20, y, 190, y);
+      y += 10;
+
+      // total
+      doc.setFontSize(14);
+      doc.text(`TOTAL: $${total.toFixed(2)}`, 20, y);
+
+      // nombre archivo
+      const fechaArchivo = new Date().toISOString().replace(/[:.]/g, "-");
+      doc.save(`ticket-${nombreCliente}-${fechaArchivo}.pdf`);
+    }
+    // -----------------------------------------------------------------------------------------------
     // funcion para renderizar los datos del carrito en el ticked
     function renderCarrito() {
       productDetail.innerHTML = "";
@@ -163,9 +234,9 @@
 
     btnImprimir.addEventListener("click", () => {
 
-      modalExit.classList.add("active");
+      // modalExit.classList.add("active");
       // window.print();
-
+      imprimirTicket()
     });
 
     // button modal salir que nos redirige a la pagina de encuestas
@@ -216,7 +287,7 @@
 
   </script>
 
-
+  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </body>
 
 </html>

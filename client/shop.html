@@ -32,26 +32,31 @@
   <main>
 
     <section class="section-products">
-      <h1>Nuestros productos</h1>
+      <div class="container-head">
+        <h1>Nuestros productos</h1>
 
-      <div class="container-lines">
-        <button id="all">Ver todo</button>
-        <button id="tv">Televisores</button>
-        <button id="sound">Sonido</button>
-        <button id="laptop">Laptops</button>
-        <button id="phones">Celulares</button>
+        <div class="container-menu">
+          <div class="container-lines">
+            <button id="all">Ver todo</button>
+            <button id="tv">Televisores</button>
+            <button id="sound">Sonido</button>
+            <button id="laptop">Laptops</button>
+            <button id="phones">Celulares</button>
+          </div>
+          <div id="paginacion" class="container-paginacion">
+            <button id="btn-anterior">Anterior</button>
+            <span id="info-pagina"></span>
+            <button id="btn-siguiente">Siguiente</button>
+          </div>
+
+        </div>
       </div>
       <div id="lista-productos" class="container-products"></div>
     </section>
 
-    <div id="paginacion" class="container-paginacion">
-      <button id="btn-anterior">Anterior</button>
-      <span id="info-pagina"></span>
-      <button id="btn-siguiente">Siguiente</button>
-    </div>
 
     <script type="module">
-      import { getListProducts, getListProductsForLines } from "./js/api.js";
+      import { getListProducts } from "./js/api.js";
 
       const listProducts = document.getElementById("lista-productos");
 
@@ -138,6 +143,7 @@
 
       const LIMIT = 8; // productos por página
       let paginaActual = 1;
+      let lineaActual = null;
 
       const infoPagina = document.getElementById("info-pagina");
       const btnAnterior = document.getElementById("btn-anterior");
@@ -148,7 +154,7 @@
       async function renderProducts(pagina = 1) {
         try {
 
-          const response = await getListProducts(pagina, LIMIT);
+          const response = await getListProducts(pagina, LIMIT, lineaActual);
 
           const products = response.payload;
 
@@ -169,7 +175,7 @@
 
             <div class="card-img">
               <img
-                src="http://localhost:3006${product.image_url}"
+                src="http://localhost:3000${product.image_url}"
                 alt="${product.image_url}"
               >
             </div>
@@ -222,11 +228,11 @@
             btn.addEventListener("click", agregarAlCarrito);
           });
 
-          // Actualizamos el texto "Página X de Y"
+          // Actualizamos el texto "Pagina X de Y"
           infoPagina.textContent = `Página ${response.currentPage} de ${response.totalPages}`;
 
-          // Deshabilitamos "Anterior" si ya estamos en la primera página,
-          // y "Siguiente" si ya estamos en la última
+          // Deshabilitamos "Anterior" si ya estamos en la primera pagina,
+          // y "Siguiente" si ya estamos en la ultima
           btnAnterior.disabled = response.currentPage <= 1;
           btnSiguiente.disabled = response.currentPage >= response.totalPages;
 
@@ -236,13 +242,29 @@
       }
 
 
-      btnTv.addEventListener("click", async () => {
-        const response = await getListProductsForLines(1);
+      btnTv.addEventListener("click", () => {
+        lineaActual = 1;
+        renderProducts(1);
+      });
 
-        const products = response.payload;
-        console.log(products)
-        // renderProducts(products)
+      btnSound.addEventListener("click", () => {
+        lineaActual = 2;
+        renderProducts(1);
+      });
 
+      btnLaptop.addEventListener("click", () => {
+        lineaActual = 4;
+        renderProducts(1);
+      });
+
+      btnPhones.addEventListener("click", () => {
+        lineaActual = 3;
+        renderProducts(1);
+      });
+
+      btnAll.addEventListener("click", () => {
+        lineaActual = null;
+        renderProducts(1);
       });
 
       btnAnterior.addEventListener("click", () => {
