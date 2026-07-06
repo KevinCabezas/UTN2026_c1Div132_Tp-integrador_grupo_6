@@ -261,3 +261,11 @@
       display: flex;
       justify-content: space-between;
     }
+
+    .container-lines .focus {
+      background-color: var(--secondary-color);
+    }
+
+    .container-lines .btn-all {
+      background-color: var(--secondary-color);
+    }

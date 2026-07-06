@@ -37,8 +37,8 @@
 
         <div class="container-menu">
           <div class="container-lines">
-            <button id="all">Ver todo</button>
-            <button id="tv">Televisores</button>
+            <button id="all" class="btn-all">Ver todo</button>
+            <button id="tv" >Televisores</button>
             <button id="sound">Sonido</button>
             <button id="laptop">Laptops</button>
             <button id="phones">Celulares</button>
@@ -243,26 +243,51 @@
 
 
       btnTv.addEventListener("click", () => {
+        btnTv.className = "focus";
+        btnAll.className = "";
+        btnSound.className = "";
+        btnLaptop.className = "";
+        btnPhones.className = "";
         lineaActual = 1;
         renderProducts(1);
       });
 
       btnSound.addEventListener("click", () => {
+        btnSound.className = "focus";
+        btnTv.className = "";
+        btnAll.className = "";
+        btnLaptop.className = "";
+        btnPhones.className = "";
         lineaActual = 2;
         renderProducts(1);
       });
 
       btnLaptop.addEventListener("click", () => {
+        btnLaptop.className = "focus";
+        btnTv.className = "";
+        btnAll.className = "";
+        btnSound.className = "";
+        btnPhones.className = "";
         lineaActual = 4;
         renderProducts(1);
       });
 
       btnPhones.addEventListener("click", () => {
+        btnPhones.className = "focus";
+        btnTv.className = "";
+        btnAll.className = "";
+        btnSound.className = "";
+        btnLaptop.className = "";
         lineaActual = 3;
         renderProducts(1);
       });
 
       btnAll.addEventListener("click", () => {
+        btnAll.className = "focus";
+        btnTv.className = "";
+        btnSound.className = "";
+        btnLaptop.className = "";
+        btnPhones.className = "";
         lineaActual = null;
         renderProducts(1);
       });
