@@ -90,7 +90,7 @@ export const createProductView = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: "Error interno del servidor"
+            message: "Error interno del servidor."
         });
     }
 }
@@ -98,10 +98,20 @@ export const createProductView = async (req, res) => {
 export const updateProductView = async (req, res) => {
     try {
         const { id } = req.query;
+        if (!id) {
+            return res.render("dashboard/modify-search", {
+                title: "Modificar producto",
+                about: "Buscar producto a modificar",
+                error: null
+            });
+        }
         const [productRows] = await ProductModels.getProductById(id);
-
         if (productRows.length === 0) {
-            return res.status(404).send('No se encontró el producto');
+            return res.render("dashboard/modify-search", {
+                title: "Modificar producto",
+                about: "Buscar producto a modificar",
+                error: "El ID ingresado no corresponde a ningún producto."
+            });
         }
         const [lineRows] = await ProductModels.getAllLines();
 
@@ -115,7 +125,7 @@ export const updateProductView = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: 'Error interno del servidor'
+            message: 'Error interno del servidor.'
         });
     }
 };

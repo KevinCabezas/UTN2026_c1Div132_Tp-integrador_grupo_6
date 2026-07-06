@@ -11,6 +11,9 @@
             <form action="/dashboard/modificar" method="GET" class="form-search-id">
                 <label for="id">ID del producto</label>
                 <input type="number" name="id" id="id" required>
+                <% if (error) { %>
+                    <p class="error-message-form"><%= error %></p>
+                <% } %>
                 <button type="submit">Buscar producto</button>
             </form>
         </section>

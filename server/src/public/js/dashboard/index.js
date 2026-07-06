@@ -8,6 +8,7 @@ const agregarFuncionalidadBotones = () => {
             try {
                 const ID = boton.getAttribute('data-id');
                 navigator.clipboard.writeText(ID);
+                alert('Id copiado al portapapeles');
             } catch (error) {
                 console.error('Error al copiar el id: ', error);
             }
