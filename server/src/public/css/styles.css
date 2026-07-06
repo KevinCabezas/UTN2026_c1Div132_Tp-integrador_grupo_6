@@ -68,6 +68,12 @@ button,input,select{
   border-radius:var(--radius);
   background:var(--bg);
 }
+.logo-container img{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  object-fit:cover;
+}
 
 .enlaces{
   list-style:none;
@@ -457,4 +463,10 @@ hr{
 
 .message-error {
   color:var(--danger);
+}
+.alumnos {
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+  margin: 4px 8px;
 }
