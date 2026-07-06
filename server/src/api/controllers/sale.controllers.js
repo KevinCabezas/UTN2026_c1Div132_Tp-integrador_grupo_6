@@ -1,5 +1,8 @@
 import saleModels from "../models/sale.models.js";
+import ProductModels from "../models/product.models.js";
 import ExcelJS from "exceljs";
+
+
 export const createSale = async (req, res) => {
 
   try {
@@ -17,6 +20,7 @@ export const createSale = async (req, res) => {
 
       const [response] = await saleModels.insertNewSaleDetail(sale_id, p.product_id, p.quantity);
       await saleModels.updateTotalPriceSale(sale_id, p.product_id, p.quantity);
+      await ProductModels.updateStock(p.quantity ,p.product_id);
       console.log(p);
     }
 

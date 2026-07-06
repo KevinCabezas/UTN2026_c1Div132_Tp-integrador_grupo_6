@@ -28,22 +28,22 @@ const getAllProducts = (limit, offset, line = null) => {
     return connection.query(sql, params);
 }
 
-const getAllProductsForLine = (lineId) => {
-    const sql = `
-        SELECT
-            p.id,
-            p.name,
-            p.brand,
-            p.price,
-            p.stock,
-            p.image_url,
-            l.name AS line_name
-        FROM products p
-        INNER JOIN product_lines l ON p.line_id = l.id
-        WHERE p.state = 1 AND p.line_id = ?
-    `;
-    return connection.query(sql, [lineId]);
-}
+// const getAllProductsForLine = (lineId) => {
+//     const sql = `
+//         SELECT
+//             p.id,
+//             p.name,
+//             p.brand,
+//             p.price,
+//             p.stock,
+//             p.image_url,
+//             l.name AS line_name
+//         FROM products p
+//         INNER JOIN product_lines l ON p.line_id = l.id
+//         WHERE p.state = 1 AND p.line_id = ?
+//     `;
+//     return connection.query(sql, [lineId]);
+// }
 
 const getProductById = (id) => {
     const sql = `
@@ -167,6 +167,16 @@ const countActiveProducts = (line) => {
     return connection.query(sql, params);
 }
 
+const updateStock = (quantity, id) => {
+    const sql = `
+        UPDATE products 
+        SET stock = stock - ?
+        WHERE id = ?
+    `;
+    return connection.query(sql, [quantity, id]);
+}
+
+
 export default {
     getAllProducts,
     getAllProductsAdmin,
@@ -179,5 +189,6 @@ export default {
     deleteProduct,
     activateProduct,
     countActiveProducts,
-    getAllProductsForLine
+    updateStock,
+
 }

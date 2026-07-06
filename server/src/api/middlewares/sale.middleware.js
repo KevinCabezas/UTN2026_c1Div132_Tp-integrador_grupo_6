@@ -1,69 +1,86 @@
-const validateSale = (req, res, next) => {
+import productModels from "../models/product.models.js";
+
+const validateSaleReq = (req, res, next) => {
     const { customer_name, products } = req.body;
+
     const errores = [];
 
-    // Validacion nameCustomer
-    if (customer_name === undefined || customer_name === null) {
-        errores.push('El nombre del comprador es obligatorio.');
-    } else if (typeof customer_name !== 'string'){
-        errores.push('El nombre del comprador no es válido.');
-    } else {
-        const lengthCustomerName = customer_name.trim().length;
-        if (lengthCustomerName < 2) {
-            errores.push('El nombre del comprador debe tener mas de 2 caracteres.');
-        } else if (lengthCustomerName > 50){
-            errores.push('El nombre del comprador no debe superar los 50 caracteres.');
-        }
+    if (!customer_name || typeof customer_name !== 'string' || customer_name.trim().length < 2) {
+        errores.push("Nombre invalido");
     }
 
-    // Validacion products
-    if (products === undefined || products === null) {
-        errores.push('La lista de productos es obligatoria.');
-    } else if (!Array.isArray(products)) {
-        errores.push('La lista de productos no es válida.');
-    } else { 
-        const lengthProducts = products.length;
-        if (lengthProducts === 0) {
-            errores.push('La lista de productos debe tener al menos un producto.')
-        } else {
-            for (let i = 0; i < lengthProducts; i++) {
+    if (!products || !Array.isArray(products) || products.length === 0) {
+        errores.push("Lista de productos invalido");
+    } else {
+        // Validar cada producto individualmente si la lista existe
+        for (let i = 0; i < products.length; i++) {
 
-                // Validacion producto
-                let producto = products[i];
-                if(producto === undefined || producto === null || typeof producto !== 'object') {
-                    errores.push(`El producto en la posicion ${i} no es válido.`)
-                    continue;
-                }
+            // Verificar que el elemento sea un objeto
+            if (!products[i] || typeof products[i] !== 'object') {
+                errores.push(`El producto en la posicion ${i} no es valido`);
+                continue; // Pasa al siguiente producto
+            }
 
-                // Validacion product_id
-                let id = producto.product_id;
-                if (id === undefined || id === null) {
-                    errores.push(`El producto en la posicion ${i} no tiene un product_id definido.`)
-                } else if (typeof id !== 'number' || isNaN(id) || !Number.isInteger(id)) {
-                    errores.push(`El producto en la posicion ${i} tiene un product_id inválido.`);
-                }
+            // Validar product_id
+            if (!("product_id" in products[i]) || typeof products[i].product_id !== 'number' || products[i].product_id <= 0) {
+                errores.push(`Error en producto_id de producto ${i} `);
+            }
 
-                // Validacion quantity
-                let quantity = producto.quantity;
-                if (quantity === undefined || quantity === null) {
-                    errores.push(`El producto en la posicion ${i} no tiene un quantity definido.`)
-                } else if (typeof quantity !== 'number' || isNaN(quantity) || !Number.isInteger(quantity)) {
-                    errores.push(`El producto en la posicion ${i} tiene un quantity inválido.`);
-                } else if (quantity <= 0) {
-                    errores.push(`El producto en la posicion ${i} tiene un quantity menor o igual a 0.`)
-                }
+            // Validar quantity
+            if (!("quantity" in products[i]) || typeof products[i].quantity !== 'number' || products[i].quantity <= 0) {
+                // if (!("quantity" in products[i])) {
+                console.log(products[i])
+                errores.push(`Error en quantity producto ${i}`);
             }
         }
     }
 
     if (errores.length > 0) {
-        return res.status(400).json({
-            messages: errores
-        });
+        return res.status(400).json({ message: "Datos invalidos", errores });
     }
+
+
+    next();
+};
+
+
+const validarStock = async (req, res, next) => {
+
+    const { products } = req.body;
+    const errors = [];
+
+
+    for (let i = 0; i < products.length; i++) {
+
+        const [row] = await productModels.getProductStock(products[i].product_id);
+        const existRows = row[0]
+        if (!existRows) {
+            errors.push({
+                product_id: products[i].product_id,
+                message: "Inexistente"
+            });
+            continue;
+        }
+
+
+        console.log(existRows.stock)
+        if (existRows.stock < products[i].quantity) {
+            errors.push({
+                product_id: products[i].product_id,
+                stock: existRows.stock,
+                quantity: products[i].quantity,
+                message: "Stock insuficiente"
+            });
+        }
+    }
+    if (errors.length > 0) {
+        return res.status(400).json({ message: "Datos invalidos", errors });
+    }
+
     next();
 }
 
 export {
-    validateSale
+    validarStock,
+    validateSaleReq
 }
