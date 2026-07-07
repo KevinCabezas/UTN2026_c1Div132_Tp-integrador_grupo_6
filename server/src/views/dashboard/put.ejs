@@ -1,66 +1,78 @@
 <%- include("../partials/head.ejs") %>
-<%- include("../partials/header.ejs") %>
+    <%- include("../partials/header.ejs") %>
 
-<div class="layout">
-    <%- include("../partials/sidebar.ejs") %>
+        <div class="layout">
+            <%- include("../partials/sidebar.ejs") %>
 
-    <main class="container-secc">
-        <section class="form-productos">
-            <h2><%= about %></h2>
+                <main class="container-secc">
+                    <section class="form-productos">
+                        <h2>
+                            <%= about %>
+                        </h2>
 
-            <form id="saveProduct-form" class="form-producto">
-                <input type="hidden" name="id" id="id" value="<%= producto.id %>">
+                        <form id="saveProduct-form" class="form-producto">
+                            <input type="hidden" name="id" id="id" value="<%= producto.id %>">
 
-                <div class="form-group">
-                    <label for="name">Nombre:</label>
-                    <input type="text" name="name" id="name" value="<%= producto.name %>" required>
-                </div>
+                            <div class="form-group">
+                                <label for="name">Nombre:</label>
+                                <input type="text" name="name" id="name" value="<%= producto.name %>" required>
+                            </div>
 
-                <div class="form-group">
-                    <label for="brand">Marca:</label>
-                    <input type="text" name="brand" id="brand" value="<%= producto.brand %>" required>
-                </div>
+                            <div class="form-group">
+                                <label for="brand">Marca:</label>
+                                <input type="text" name="brand" id="brand" value="<%= producto.brand %>" required>
+                            </div>
 
-                <div class="form-group">
-                    <label for="price">Precio: $</label>
-                    <input type="number" name="price" id="price" step="0.01" value="<%= producto.price %>" required>
-                </div>
+                            <div class="form-group">
+                                <label for="price">Precio: $</label>
+                                <input type="number" name="price" id="price" step="0.01" value="<%= producto.price %>"
+                                    required>
+                            </div>
 
-                <div class="form-group">
-                    <label for="stock">Stock:</label>
-                    <input type="number" name="stock" id="stock" value="<%= producto.stock %>" required>
-                </div>
+                            <div class="form-group">
+                                <label for="stock">Stock:</label>
+                                <input type="number" name="stock" id="stock" value="<%= producto.stock %>" required>
+                            </div>
 
-                <div class="form-group">
-                    <label for="image_url">Imagen (url):</label>
-                    <input type="text" name="image_url" id="image_url" value="<%= producto.image_url %>" required>
-                </div>
+                            <!-- <div class="form-group">
+                                <label for="image_url">Imagen (url):</label>
+                                <input type="text" name="image_url" id="image_url" value="<%= producto.image_url %>"
+                                    required>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="image_url">Subir imagen</label>
+                                <input type="file" name="image" id="image" accept="image/*">
+                            </div>
 
-                <div class="form-group">
-                    <label for="line_id">Línea del Producto:</label>
-                    <select name="line_id" id="line_id" required>
-                        <option value="" class="line-option">Seleccionar línea</option>
-                        <% lineas.forEach(linea => { %>
-                            <% if (linea.name === producto.line_name) { %>
-                                <option value="<%= linea.id %>" selected><%= linea.name %></option>
-                            <% } else { %>
-                                <option value="<%= linea.id %>"><%= linea.name %></option>
-                            <% } %>
-                        <% }) %>
-                    </select>
-                </div>
+                            <div class="form-group">
+                                <label for="line_id">Línea del Producto:</label>
+                                <select name="line_id" id="line_id" required>
+                                    <option value="" class="line-option">Seleccionar línea</option>
+                                    <% lineas.forEach(linea=> { %>
+                                        <% if (linea.name===producto.line_name) { %>
+                                            <option value="<%= linea.id %>" selected>
+                                                <%= linea.name %>
+                                            </option>
+                                            <% } else { %>
+                                                <option value="<%= linea.id %>">
+                                                    <%= linea.name %>
+                                                </option>
+                                                <% } %>
+                                                    <% }) %>
+                                </select>
+                            </div>
 
-                <div class="form-group">
-                    <button type="submit">Actualizar producto</button>
-                </div>
-            </form>
-        </section>
+                            <div class="form-group">
+                                <button type="submit">Actualizar producto</button>
+                            </div>
+                        </form>
+                    </section>
 
-        <section class="secccion-productos">
-            <div id="contenedor-productos"></div>
-        </section>
-    </main>
-</div>
+                    <section class="secccion-productos">
+                        <div id="contenedor-productos"></div>
+                    </section>
+                </main>
+        </div>
 
-<script src="/js/dashboard/put.js"></script>
-<%- include("../partials/footer.ejs") %>
+        <script src="/js/dashboard/put.js"></script>
+        <%- include("../partials/footer.ejs") %>

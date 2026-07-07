@@ -92,11 +92,25 @@ const createProduct = (name, brand, price, stock, line_id, image_url) => {
 
 const updateProduct = (name, brand, price, stock, line_id, image_url, id) => {
     const sql = `
-        UPDATE products 
-        SET name = ?, brand = ?, price = ?, stock = ?, line_id = ?, image_url = ? 
-        WHERE id = ?
-    `;
-    return connection.query(sql, [name, brand, price, stock, line_id, image_url, id]);
+    UPDATE products
+    SET
+        name = COALESCE(?, name),
+        brand = COALESCE(?, brand),
+        price = COALESCE(?, price),
+        stock = COALESCE(?, stock),
+        line_id = COALESCE(?, line_id),
+        image_url = COALESCE(?, image_url)
+    WHERE id = ?
+`;
+    return connection.query(sql, [
+        name ?? null,
+        brand ?? null,
+        price ?? null,
+        stock ?? null,
+        line_id ?? null,
+        image_url ?? null,
+        id
+    ]);
 }
 
 const deleteProduct = (id) => {

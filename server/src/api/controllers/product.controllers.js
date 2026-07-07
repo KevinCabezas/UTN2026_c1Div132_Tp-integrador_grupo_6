@@ -9,7 +9,7 @@ export const getAllProducts = async (req, res) => {
 
         const offset = (page - 1) * limit;
 
-        const [rows] = await ProductModels.getAllProducts(limit, offset,line);
+        const [rows] = await ProductModels.getAllProducts(limit, offset, line);
         const [countResult] = await ProductModels.countActiveProducts(line);
         const total = countResult[0].total;
 
@@ -105,7 +105,7 @@ export const getProductStockById = async (req, res) => {
 
 export const getAllProductLines = async (req, res) => {
     try {
-        const [rows] = await ProductModels.getAllLines(); 
+        const [rows] = await ProductModels.getAllLines();
 
         if (rows.length === 0) {
             return res.status(404).json({
@@ -116,7 +116,7 @@ export const getAllProductLines = async (req, res) => {
         res.status(200).json({
             payload: rows
         });
-        
+
     } catch (error) {
         console.log('Error obteniendo líneas de productos: ', error);
         res.status(500).json({
@@ -149,13 +149,14 @@ export const createProduct = async (req, res) => {
 
 export const modifyProduct = async (req, res) => {
     try {
-        const { id, name, brand, price, stock, line_id, image_url } = req.body;
+        const { id, name, brand, price, stock, line_id } = req.body;
 
-        if (!id || !name || !brand || !price || !stock || !line_id || !image_url) {
+        if (!id || !name || !brand || !price || !stock || !line_id ) {
             return res.status(400).json({
                 message: "Todos los campos son obligatorios"
             });
         }
+        const image_url = req.file ? `/uploads/${req.file.filename}` : null;
 
         const [result] = await ProductModels.updateProduct(
             name,
