@@ -103,7 +103,7 @@
     const btnImprimir = document.getElementById("btnImprimir");
     const mensaje = document.getElementById("mensaje");
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const nombreCliente = localStorage.getItem("nombre") || "Cliente";
+    const nombreCliente = localStorage.getItem("nombre");
 
     function imprimirTicket() {
       const { jsPDF } = window.jspdf;
@@ -111,7 +111,7 @@
 
       let y = 20;
 
-      
+
       const fecha = new Date().toLocaleString();
 
       // Encabezado
@@ -177,7 +177,7 @@
       doc.save(`ticket-${nombreCliente}-${fechaArchivo}.pdf`);
     }
 
-    
+
     // -----------------------------------------------------------------------------------------------
     // funcion para renderizar los datos del carrito en el ticked
     function renderCarrito() {
@@ -196,7 +196,7 @@
           <td>$${product.precio}</td>
           <td>$${subtotal}</td>
            <td class="td-eliminar">
-          <button class="btn-eliminar" data-index="${index}">
+          <button id="btn-delete" class="btn-eliminar" data-index="${index}">
             Eliminar
           </button>
         </td>
@@ -208,6 +208,42 @@
       totalCompra.textContent = total.toFixed(2);
     }
 
+
+    function messageStockError(listErrors = []) {
+
+      console.log(listErrors)
+      if (listErrors.length > 0) {
+        console.log("entro")
+        listErrors.forEach(error => {
+          const product = carrito.find(p => p.id === error.product_id);
+
+          if (product) {
+            let cantidadIdeal = Math.floor(error.stock / 2);
+            mensaje.textContent = `
+              Producto: ${product.nombre} sin stock suficiente
+              Compre menos de ${cantidadIdeal} unidades
+
+            `;
+            mensaje.className = "error";
+
+            console.log(product.nombre);
+            console.log(error.product_id);
+            console.log(error.stock);
+            console.log(error.quantity);
+          }
+
+          if (error.stock === 0) {
+            mensaje.textContent = ` Producto: ${product.nombre} sin stock`;
+            mensaje.className = "error";
+
+          }
+        });
+      } else {
+        mensaje.textContent = "Error del sistema: no se pudo realizar la compra";
+        mensaje.className = "error";
+
+      }
+    }
 
     // funcion que mapea los datos del carrito y los pasa a un objeto(sale)
     // despues se lo pasmos al funcion create sale y esa funcion lo envia la back 
@@ -223,7 +259,9 @@
       };
 
       try {
-        await createSale(sale);
+
+        const response = await createSale(sale);
+        console.log("holalla")
         localStorage.removeItem("carrito");
         localStorage.removeItem("nombre");
 
@@ -231,21 +269,34 @@
         mensaje.className = "success";
         btnComprar.style.display = "none";
         btnImprimir.style.display = "block";
-
       } catch (error) {
+        console.log(error.errors)
 
-        mensaje.textContent = "No se pudo realizar la compra";
-        mensaje.className = "error";
+        messageStockError(error.errors);
+        document.querySelectorAll(".btn-eliminar").forEach(btn => {
+          btn.disabled = false;
+        });
       }
     }
 
     // button del ticket para confirmar la venta
     btnComprar.addEventListener("click", async () => {
-      // console.log(carrito.length)
-      // preguntamos si hay productos en el carrito para mostrar o no el modalConfirm de confirmar o cancelar la compra
+      const nombreCliente = localStorage.getItem("nombre");
+
+      if (!nombreCliente) {
+        modalConfirm.classList.remove("active");
+        mensaje.textContent = "Error en la compra, ingrese su nombre";
+        mensaje.className = "error";
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000);
+
+        return;
+      }
+
       if (carrito.length > 0) {
         modalConfirm.classList.add("active");
-
       } else {
         modalConfirm.classList.remove("active");
         mensaje.textContent = "Sin productos en el carrito";
@@ -259,7 +310,6 @@
       // modalExit.classList.add("active");
       imprimirTicket();
       mensaje.textContent = "Ticket impreso";
-      renderCarrito();
       setTimeout(() => {
         window.location.href = "index.html";
       }, 3000);
@@ -281,7 +331,7 @@
         indexEliminar = Number(e.target.dataset.index);
         carrito.splice(indexEliminar, 1);
         console.log(carrito)
-
+        mensaje.textContent = "";
         // actualizamos el carrito en el localStorage ya qwue se elimino un producto
         // lo volvemos a renderizar con los nuevos datos
         localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -300,6 +350,9 @@
 
     // Button del modalConfirm para confirmar la compra y se envien la data al back
     btnConfirm.addEventListener("click", () => {
+      document.querySelectorAll(".btn-eliminar").forEach(btn => {
+        btn.disabled = true;
+      });
       // if (carrito.length())
       // console.log(carrito)
       sendDataSale()
@@ -310,6 +363,15 @@
 
     });
 
+    window.addEventListener("pageshow", (event) => {
+      if (event.persisted) {
+        const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+        if (carrito.length === 0) {
+          window.location.replace("index.html");
+        }
+      }
+    });
     renderCarrito();
 
   </script>

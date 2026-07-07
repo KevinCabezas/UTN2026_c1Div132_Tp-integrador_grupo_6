@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/logo.png" type="image/x-icon">
+  <link rel="icon" href="assets/logo.png" type="image/x-icon">
 
   <title>Shop</title>
 
@@ -28,6 +28,8 @@
 
           <!-- <a href="index.html">Cancelar</a> -->
         </a>
+        <a href="index.html" id="salir" class="salir">Salir</a>
+
       </div>
     </nav>
   </header>
@@ -40,7 +42,7 @@
         <div class="container-menu">
           <div class="container-lines">
             <button id="all" class="btn-all">Ver todo</button>
-            <button id="tv" >Televisores</button>
+            <button id="tv">Televisores</button>
             <button id="sound">Sonido</button>
             <button id="laptop">Laptops</button>
             <button id="phones">Celulares</button>
@@ -67,6 +69,9 @@
       const btnSound = document.getElementById("sound");
       const btnLaptop = document.getElementById("laptop");
       const btnPhones = document.getElementById("phones");
+      // const nombreCliente = localStorage.getItem("nombre") || "Cliente";
+
+      const btnSalir = document.getElementById("salir");
 
       //=================== LOCAL STORAGE ===================//
 
@@ -210,6 +215,11 @@
 
           </div>
         `;
+          });
+
+          btnSalir.addEventListener("click", () => {
+            localStorage.removeItem("nombre");
+            window.location.href = "index.html";
           });
 
           // Eventos +

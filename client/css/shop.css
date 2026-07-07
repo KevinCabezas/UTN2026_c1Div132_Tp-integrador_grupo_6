@@ -207,6 +207,12 @@
       text-decoration: none;
     }
 
+    .btn-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .btn-nav a {
       color: white;
       background: var(--secondary-color);
@@ -216,8 +222,11 @@
       padding: 8px 16px;
       border-radius: 30px;
     }
-
-    .btn-nav a:hover {
+    .btn-nav .salir {
+      font-size: 17px;
+       padding: 8px 16px;
+    }
+    .btn-nav a:hover  {
       color: var(--secondary-color);
       background: white;
       transition-duration: 300ms;
