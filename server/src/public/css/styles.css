@@ -68,7 +68,12 @@ button,input,select{
   border-radius:var(--radius);
   background:var(--bg);
 }
-
+.logo-container img{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  object-fit:cover;
+}
 .enlaces{
   list-style:none;
   display:flex;
