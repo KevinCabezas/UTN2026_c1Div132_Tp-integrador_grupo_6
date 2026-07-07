@@ -32,7 +32,7 @@ const validateCredentials = (req, res, next) => {
 
     if (errores.length > 0) {
         return res.status(400).json({
-            message: errores
+            messages: errores
         })
     }
     next();
@@ -40,9 +40,7 @@ const validateCredentials = (req, res, next) => {
 
 const requireLogin = (req, res, next) => {
     if (!req.session || !req.session.user) {
-        return res.status(401).json({
-            message: 'Usuario no logueado. Por favor, inicie sesion para continuar.'
-        })
+        return res.redirect('/auth');
     }
     next();
 }
