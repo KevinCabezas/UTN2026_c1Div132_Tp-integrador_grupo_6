@@ -3,7 +3,7 @@ CREATE TABLE product_lines (
     name VARCHAR(50) NOT NULL
 );
 
-INSERT INTO product_lines (name) VALUES ('marron'), ('gris');
+INSERT INTO product_lines (name) VALUES ('television'), ('sound'), ('phone'), ('laptop');
 
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -1,0 +1,22 @@
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/header.ejs") %>
+
+<div class="layout">
+    <%- include("../partials/sidebar.ejs") %>
+
+    <main class="container-secc">
+        <section class="form-productos">
+            <h2><%= about %></h2>
+            
+            <form id="activate-form" class="form-search-id">
+                <label for="id">Id del producto:</label>
+                <input type="number" name="id" id="id" required>
+                <p class="message-input-form"></p>
+                <button type="submit">Activar</button>
+            </form>
+        </section>
+    </main>
+</div>
+
+<script src="/js/dashboard/activate.js"></script>
+<%- include("../partials/footer.ejs") %>

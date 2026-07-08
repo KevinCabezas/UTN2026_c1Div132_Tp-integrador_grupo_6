@@ -137,6 +137,13 @@ export const deleteProductView = (req, res) => {
     });
 }
 
+export const activateProductView = (req, res) => {
+    res.render("dashboard/activate", {
+        title: "Activar producto",
+        about: "Consultar producto por id: "
+    });
+}
+
 export const createAdminView = (req, res) => {
     res.render("dashboard/create-admin", {
         title: "Crear administrador",
