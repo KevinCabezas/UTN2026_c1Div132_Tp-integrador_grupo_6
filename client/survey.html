@@ -1,175 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
+  <title>Encuesta de Satisfacción</title>
   <link rel="stylesheet" href="./css/index.css">
-
 </head>
 
 <body>
   <header>
-    <p class="alumnos">Alumnos: Leandro Ascevedo, Lucas Rossi, Kevin Cabezas</p>
+    <p class="alumnos">Alumnos: Leandro Agustin Acevedo, Lucas Rossi, Kevin Cabezas</p>
   </header>
   <main>
-    <!DOCTYPE html>
-    <html lang="es">
+    <form id="surveyForm">
 
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Encuesta de Satisfacción</title>
-    </head>
+      <h2>Customer Satisfaction Survey</h2>
 
-    <body>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required>
 
-      <form id="surveyForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
 
-        <h2>Customer Satisfaction Survey</h2>
+      <p>Which products are you interested in?</p>
 
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required>
+      <label>
+        <input type="checkbox" name="products" value="Smart TVs">
+        Smart TVs
+      </label>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+      <label>
+        <input type="checkbox" name="products" value="Laptops">
+        Laptops
+      </label>
 
-        <p>Which products are you interested in?</p>
+      <label>
+        <input type="checkbox" name="products" value="Gaming Consoles">
+        Gaming Consoles
+      </label>
 
-        <label>
-          <input type="checkbox" name="products" value="Smart TVs">
-          Smart TVs
-        </label>
+      <label for="coment">
+        Tell us how we can improve
+      </label>
 
-        <label>
-          <input type="checkbox" name="products" value="Laptops">
-          Laptops
-        </label>
+      <textarea id="coment" name="coment" rows="5"></textarea>
 
-        <label>
-          <input type="checkbox" name="products" value="Gaming Consoles">
-          Gaming Consoles
-        </label>
+      <label for="rating">
+        Overall Rating (1 - 10)
+      </label>
 
-        <label for="coment">
-          Tell us how we can improve
-        </label>
+      <input type="range" id="rating" name="rating" min="1" max="10" value="5">
 
-        <textarea id="coment" name="coment" rows="5"></textarea>
+      <span id="ratingValue">5</span>
 
-        <label for="rating">
-          Overall Rating (1 - 10)
-        </label>
+      <label for="image">
+        Upload a screenshot (optional)
+      </label>
 
-        <input type="range" id="rating" name="rating" min="1" max="10" value="5">
+      <input type="file" id="image" name="image" accept="image/*">
 
-        <span id="ratingValue">5</span>
+      <button type="submit">
+        Submit Survey
+      </button>
 
-        <label for="image">
-          Upload a screenshot (optional)
-        </label>
-
-        <input type="file" id="image" name="image" accept="image/*">
-
-        <button type="submit">
-          Submit Survey
-        </button>
-
-      </form>
-
-      <script type="module">
-
-        import { createSurvey } from "./js/api.js";
-
-        const form = document.getElementById("surveyForm");
-        const rating = document.getElementById("rating");
-        const ratingValue = document.getElementById("ratingValue");
-
-        rating.addEventListener("input", () => {
-          ratingValue.textContent = rating.value;
-        });
-
-        form.addEventListener("submit", async (e) => {
-
-          e.preventDefault();
-
-          const name = form.name.value.trim();
-          const email = form.email.value.trim();
-          const coment = form.coment.value.trim();
-          const rating = form.rating.value;
-          const image = form.image.files[0];
-
-          const products = document.querySelectorAll(
-            'input[name="products"]:checked'
-          );
-
-          // Name
-          if (name.length < 3) {
-            alert("Name must contain at least 3 characters.");
-            return;
-          }
-
-          // Email
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-          if (!emailRegex.test(email)) {
-            alert("Please enter a valid email.");
-            return;
-          }
-
-          // Checkbox
-          if (products.length === 0) {
-            alert("Select at least one product.");
-            return;
-          }
-
-          // coment
-          if (coment.length < 20) {
-            alert("coment must contain at least 20 characters.");
-            return;
-          }
-
-          // Rating
-          if (rating < 1 || rating > 10) {
-            alert("Rating must be between 1 and 10.");
-            return;
-          }
-
-          // File
-          if (image && !image.type.startsWith("image/")) {
-            alert("The selected file must be an image.");
-            return;
-          }
-
-          const formData = new FormData(form);
-
-          try {
-            console.log(formData)
-            await createSurvey(formData);
-
-            alert("Encuesta creada con exito");
-
-            form.reset();
-
-            ratingValue.textContent = "5";
-
-          } catch (error) {
-
-            alert("Error submitting survey.");
-
-            console.error(error);
-
-          }
-
-        });
-
-      </script>
-    </body>
-
-    </html>
+    </form>
   </main>
+
+  <script type="module">
+
+    import { createSurvey } from "./js/api.js";
+
+    const form = document.getElementById("surveyForm");
+    const rating = document.getElementById("rating");
+    const ratingValue = document.getElementById("ratingValue");
+
+    rating.addEventListener("input", () => {
+      ratingValue.textContent = rating.value;
+    });
+
+    form.addEventListener("submit", async (e) => {
+
+      e.preventDefault();
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const coment = form.coment.value.trim();
+      const rating = form.rating.value;
+      const image = form.image.files[0];
+
+      const products = document.querySelectorAll(
+        'input[name="products"]:checked'
+      );
+
+      // Name
+      if (name.length < 3) {
+        alert("Name must contain at least 3 characters.");
+        return;
+      }
+
+      // Email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email.");
+        return;
+      }
+
+      // Checkbox
+      if (products.length === 0) {
+        alert("Select at least one product.");
+        return;
+      }
+
+      // coment
+      if (coment.length < 20) {
+        alert("coment must contain at least 20 characters.");
+        return;
+      }
+
+      // Rating
+      if (rating < 1 || rating > 10) {
+        alert("Rating must be between 1 and 10.");
+        return;
+      }
+
+      // File
+      if (image && !image.type.startsWith("image/")) {
+        alert("The selected file must be an image.");
+        return;
+      }
+
+      const formData = new FormData(form);
+
+      try {
+        console.log(formData)
+        await createSurvey(formData);
+
+        alert("Encuesta creada con exito");
+
+        form.reset();
+
+        ratingValue.textContent = "5";
+
+      } catch (error) {
+
+        alert("Error submitting survey.");
+
+        console.error(error);
+
+      }
+
+    });
+
+  </script>
 </body>
 
 </html>

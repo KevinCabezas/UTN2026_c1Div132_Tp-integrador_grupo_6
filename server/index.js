@@ -9,7 +9,6 @@ import session from "express-session";
 const app = express();
 
 const { port, session_key } = environments;
-const PORT = environments.port;
 
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
@@ -23,7 +22,7 @@ app.use(loggerURL);
 app.use(express.static(join(__dirname, "src/public")));
 
 app.use(session({
-  secret: "session_key",
+  secret: session_key,
   resave: false,
   saveUninitialized: false,
 }));
@@ -43,6 +42,6 @@ app.use('/api/auth', authRoutes);
 app.use("/", viewRoutes);
 
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+app.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
 });
