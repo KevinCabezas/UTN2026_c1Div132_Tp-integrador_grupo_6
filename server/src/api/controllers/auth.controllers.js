@@ -19,6 +19,8 @@ export const login = async (req, res) => {
       });
     }
     
+    // express crea una session 
+    // cuando se valida todo express manda una cockie al navegador con el identificador de la session
     req.session.user = {
       id: admin.id,
       email: admin.email,

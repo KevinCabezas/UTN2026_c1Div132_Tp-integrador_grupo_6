@@ -17,7 +17,9 @@ app.use(express.urlencoded({
     extended: true,
     limit: "10mb"
 }));
+// registra las solicitude s que llegan del servidor
 app.use(loggerURL);
+
 app.use(express.static(join(__dirname, "src/public")));
 
 app.use(session({
@@ -26,7 +28,8 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.set("view engine", "ejs");
+// configuramos la ruta de las vista para que express sepa donde esta 
+app.set("view engine", "ejs");//pra no escribir ejs en cada controller y express sepa que es un ejs
 app.set("views", join(__dirname, "src/views"));
 
 // exponemos el file de las imagenes como puplic

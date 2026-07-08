@@ -2,7 +2,6 @@ import { title } from "process";
 import ProductModels from "../models/product.models.js";
 import { join, __dirname } from "../utils/index.js";
 
-// view principal al iniciar la app
 export const indexView = (req, res) => {
 
     try {
@@ -10,7 +9,7 @@ export const indexView = (req, res) => {
             title: "",
         });
     } catch (error) {
-         console.log("Error obteniendo informacion", error.message);
+        console.log("Error obteniendo informacion", error.message);
 
         res.status(500).json({
             message: "Error interno obteniendo la informacion"
@@ -20,6 +19,7 @@ export const indexView = (req, res) => {
 }
 
 // view admin 
+// view principal al iniciar la app
 export const loginView = async (req, res) => {
 
     try {
@@ -95,8 +95,10 @@ export const createProductView = async (req, res) => {
     }
 }
 
+//controlador para modificar el producto
 export const updateProductView = async (req, res) => {
     try {
+        //si el id no se nevia entra al buscaador del producto
         const { id } = req.query;
         if (!id) {
             return res.render("dashboard/modify-search", {
@@ -105,6 +107,8 @@ export const updateProductView = async (req, res) => {
                 error: null
             });
         }
+        // si se envia un id que no existe renderiza el buscador de productos 
+        //con el mensaje de error
         const [productRows] = await ProductModels.getProductByIdAdmin(id);
         if (productRows.length === 0) {
             return res.render("dashboard/modify-search", {
@@ -113,8 +117,10 @@ export const updateProductView = async (req, res) => {
                 error: "El ID ingresado no corresponde a ningún producto."
             });
         }
+        // buscamos el nombre de las lineas para que y no solo los numeros
         const [lineRows] = await ProductModels.getAllLines();
-
+        // si todo esta ok entonces se devuelve los datosl product y se renderisa 
+        // la vista para modificar el producto
         res.render('dashboard/put', {
             title: 'Modificar producto',
             about: 'Editar producto',
