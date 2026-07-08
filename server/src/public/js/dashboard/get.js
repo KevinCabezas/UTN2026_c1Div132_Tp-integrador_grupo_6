@@ -26,9 +26,9 @@ getByIdForm.addEventListener("submit", async (event) => {
                 <img class="image-producto" src="${producto.image_url}" alt="${producto.name}">
                 <h4 class="name-producto">${producto.name}</h4>
                 <p class="id-producto">ID: ${producto.id}</p>
-                <p class="price-producto">$${producto.price}</p>
-                <p class="stock-producto">${producto.stock}</p>
-                <p class="lineId-producto">${producto.line_name}</p>
+                <p class="price-producto">Precio: $${producto.price}</p>
+                <p class="stock-producto">Stock: ${producto.stock}</p>
+                <p class="lineId-producto">Linea: ${producto.line_name}</p>
                 <p class="state-producto ${producto.state ? 'activo' : 'inactivo'}">
                     ${producto.state ? 'Activo' : 'Inactivo'}
                 </p>
